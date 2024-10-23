@@ -7,7 +7,7 @@ import ClientsList from './ClientsList'; // Importujemy komponent do wyświetlan
 export default function Tabs() {
   const tabs = [
     { label: '1 dzień temu', daysAgo: 1 },
-    { label: '7 dni temu', daysAgo: 7 },
+    { label: '10 dni temu', daysAgo: 10 },
     { label: '90 dni temu', daysAgo: 90 },
     { label: '180 dni temu', daysAgo: 180 },
   ];
