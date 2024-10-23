@@ -14,12 +14,6 @@ export default function Navbar() {
           <li>
             <Link href="/marketing">Marketing</Link>
           </li>
-          <li>
-            <Link href="/staff">Kadry</Link>
-          </li>
-          <li>
-            <Link href="/inventory">Magazyn</Link>
-          </li>
         </ul>
       </div>
     </nav>
