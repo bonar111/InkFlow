@@ -1,34 +1,57 @@
 // src/components/ClientsList.js
-import React from 'react';
+"use client";
 
-// Przykładowe dane klientów
-const clientsData = {
-  1: [
-    { id: 1, name: 'Jan Kowalski', tattoo: 'Smok' },
-    { id: 2, name: 'Anna Nowak', tattoo: 'Róża' },
-  ],
-  7: [
-    { id: 3, name: 'Piotr Wiśniewski', tattoo: 'Orzeł' },
-    { id: 4, name: 'Katarzyna Lewandowska', tattoo: 'Serce' },
-  ],
-  14: [
-    { id: 5, name: 'Michał Zieliński', tattoo: 'Żuraw' },
-    { id: 6, name: 'Magdalena Wójcik', tattoo: 'Drzewo' },
-  ],
-  90: [
-    { id: 7, name: 'Paweł Szymański', tattoo: 'Kotwica' },
-    { id: 8, name: 'Ewa Kamińska', tattoo: 'Feniks' },
-  ],
-  180: [
-    { id: 9, name: 'Tomasz Kaczmarek', tattoo: 'Tygrys' },
-    { id: 10, name: 'Agnieszka Jankowska', tattoo: 'Kwiat lotosu' },
-  ],
-};
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import axios from '../utils/axiosConfig';
 
 export default function ClientsList({ daysAgo }) {
-  // Pobieramy klientów na podstawie dni temu
-  const clients = clientsData[daysAgo] || [];
+  // Stan przechowujący dane klientów
+  const [clients, setClients] = useState([]);
+  // Stan przechowujący informację o ładowaniu danych
+  const [loading, setLoading] = useState(true);
+  // Stan przechowujący informacje o błędach
+  const [error, setError] = useState(null);
 
+  // Funkcja do pobierania danych z API
+  const fetchClients = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Budujemy endpoint na podstawie daysAgo
+      const endpoint = `/api/customercare/sessions/afterSession-${daysAgo}`;
+      
+      // Wysyłamy zapytanie GET do API
+      const response = await axios.get(endpoint);
+
+      // Zakładamy, że odpowiedź zawiera listę klientów w response.data
+      setClients(response.data);
+    } catch (err) {
+      // Jeśli wystąpił błąd, ustawiamy stan błędu
+      setError(err.message || 'Wystąpił błąd podczas pobierania danych.');
+    } finally {
+      // Kończymy stan ładowania
+      setLoading(false);
+    }
+  };
+
+  // Używamy useEffect, aby pobrać dane za każdym razem, gdy daysAgo się zmienia
+  useEffect(() => {
+    fetchClients();
+  }, [daysAgo]);
+
+  // Renderowanie stanu ładowania
+  if (loading) {
+    return <p className="text-gray-500">Ładowanie klientów...</p>;
+  }
+
+  // Renderowanie stanu błędu
+  if (error) {
+    return <p className="text-red-500">Błąd: {error}</p>;
+  }
+
+  // Renderowanie listy klientów
   return (
     <div>
       {clients.length > 0 ? (
@@ -46,3 +69,8 @@ export default function ClientsList({ daysAgo }) {
     </div>
   );
 }
+
+// Definiowanie typów propsów dla komponentu
+ClientsList.propTypes = {
+  daysAgo: PropTypes.number.isRequired,
+};
