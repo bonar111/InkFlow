@@ -94,6 +94,30 @@ export default function ClientsList({ daysAgo }) {
                   )}
                 </div>
               )}
+
+              {/* Załączniki */}
+              {client.lastSession.attachments && client.lastSession.attachments.length > 0 && (
+                <div className="mt-4">
+                  <h3 className="font-medium mb-2">Załączniki:</h3>
+                  <div className="flex flex-wrap gap-4">
+                    {client.lastSession.attachments.map((attachment, index) => (
+                      <a
+                        key={attachment.id || index}
+                        href={attachment.url} // Zakładamy, że każdy załącznik ma pole 'url'
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <img
+                          src={attachment.url}
+                          alt={`Załącznik ${index + 1}`}
+                          className="w-32 h-32 object-cover rounded-md border"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </li>
           ))}
         </ul>
