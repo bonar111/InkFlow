@@ -1,7 +1,8 @@
+// src/components/Tabs.js
 "use client";
 
 import { useState } from 'react';
-import ClientsList from './ClientsList';
+import ClientsList from './ClientsList'; // Importujemy komponent do wyświetlania klientów
 
 export default function Tabs() {
   const tabs = [
@@ -16,6 +17,7 @@ export default function Tabs() {
 
   return (
     <div>
+      {/* Pasek zakładek */}
       <div className="flex overflow-x-auto border-b">
         {tabs.map((tab) => (
           <button
@@ -31,7 +33,10 @@ export default function Tabs() {
           </button>
         ))}
       </div>
+
+      {/* Treść zakładki */}
       <div className="p-4">
+        {/* Tutaj renderujemy komponent ClientsList z odpowiednim dniem */}
         <ClientsList daysAgo={activeTab.daysAgo} />
       </div>
     </div>

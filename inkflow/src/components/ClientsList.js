@@ -1,56 +1,47 @@
-"use client";
+// src/components/ClientsList.js
+import React from 'react';
 
-import { useEffect, useState } from 'react';
+// Przykładowe dane klientów
+const clientsData = {
+  1: [
+    { id: 1, name: 'Jan Kowalski', tattoo: 'Smok' },
+    { id: 2, name: 'Anna Nowak', tattoo: 'Róża' },
+  ],
+  7: [
+    { id: 3, name: 'Piotr Wiśniewski', tattoo: 'Orzeł' },
+    { id: 4, name: 'Katarzyna Lewandowska', tattoo: 'Serce' },
+  ],
+  14: [
+    { id: 5, name: 'Michał Zieliński', tattoo: 'Żuraw' },
+    { id: 6, name: 'Magdalena Wójcik', tattoo: 'Drzewo' },
+  ],
+  90: [
+    { id: 7, name: 'Paweł Szymański', tattoo: 'Kotwica' },
+    { id: 8, name: 'Ewa Kamińska', tattoo: 'Feniks' },
+  ],
+  180: [
+    { id: 9, name: 'Tomasz Kaczmarek', tattoo: 'Tygrys' },
+    { id: 10, name: 'Agnieszka Jankowska', tattoo: 'Kwiat lotosu' },
+  ],
+};
 
 export default function ClientsList({ daysAgo }) {
-  const [clients, setClients] = useState([]);
-
-  useEffect(() => {
-    // Przykładowe dane klientów
-    const exampleClients = [
-      { id: 1, name: 'Jan Kowalski', tattooDate: '2024-10-21' },
-      { id: 2, name: 'Marian Makuszewski', tattooDate: '2024-10-21' },
-      { id: 3, name: 'Anna Nowak', tattooDate: '2024-10-15' },
-      { id: 4, name: 'Piotr Wiśniewski', tattooDate: '2024-10-08' },
-      { id: 5, name: 'Maria Lewandowska', tattooDate: '2024-07-24' },
-      { id: 6, name: 'Katarzyna Zielińska', tattooDate: '2024-04-25' },
-      // Dodaj więcej przykładowych danych
-    ];
-
-    // Obliczanie różnicy dni
-    const filteredClients = exampleClients.filter((client) => {
-      const tattooDate = new Date(client.tattooDate);
-      tattooDate.setHours(0, 0, 0, 0);
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const timeDiff = today - tattooDate;
-      const diffDays = Math.round(timeDiff / (1000 * 3600 * 24));
-
-      console.log(
-        `Client: ${client.name}, Tattoo Date: ${client.tattooDate}, Days Ago: ${diffDays}`
-      );
-
-      return diffDays === daysAgo;
-    });
-
-    setClients(filteredClients);
-  }, [daysAgo]);
+  // Pobieramy klientów na podstawie dni temu
+  const clients = clientsData[daysAgo] || [];
 
   return (
     <div>
       {clients.length > 0 ? (
-        <ul>
+        <ul className="space-y-4">
           {clients.map((client) => (
-            <li key={client.id} className="border-b py-2 flex justify-between">
-              <span>{client.name}</span>
-              <button className="text-blue-500">Szczegóły</button>
+            <li key={client.id} className="p-4 border rounded shadow-sm">
+              <h2 className="text-lg font-semibold">{client.name}</h2>
+              <p>Tatuaż: {client.tattoo}</p>
             </li>
           ))}
         </ul>
       ) : (
-        <p>Brak klientów do wyświetlenia.</p>
+        <p className="text-gray-500">Brak klientów dla wybranego okresu.</p>
       )}
     </div>
   );
