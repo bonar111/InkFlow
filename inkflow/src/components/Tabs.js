@@ -8,7 +8,6 @@ export default function Tabs() {
   const tabs = [
     { label: '1 dzień temu', daysAgo: 1 },
     { label: '7 dni temu', daysAgo: 7 },
-    { label: '14 dni temu', daysAgo: 14 },
     { label: '90 dni temu', daysAgo: 90 },
     { label: '180 dni temu', daysAgo: 180 },
   ];
