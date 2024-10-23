@@ -67,14 +67,14 @@ export default function ClientsList({ daysAgo }) {
   return (
     <div className="container mx-auto px-4">
       {clients.length > 0 ? (
-        <ul className="space-y-6">
+        <ul className="space-y-8"> {/* Zwiększony odstęp między rekordami */}
           {clients.map((client) => {
             const attachments = getAttachments(client);
 
             return (
               <li
                 key={client.id}
-                className="bg-white shadow-md rounded-lg p-6 flex flex-col hover:shadow-lg transition-shadow duration-300"
+                className="bg-white shadow-lg rounded-xl p-6 flex flex-col border border-gray-200 hover:bg-gray-50 transition-colors duration-300"
               >
                 {/* Imię i Nazwisko Klienta */}
                 <h2 className="text-2xl font-semibold text-gray-800">
@@ -120,11 +120,11 @@ export default function ClientsList({ daysAgo }) {
 
                 {/* Załączniki */}
                 {attachments.length > 0 && (
-                  <div className="mt-4">
-                    <h3 className="text-xl font-medium text-gray-700 mb-2">
+                  <div className="mt-6">
+                    <h3 className="text-xl font-medium text-gray-700 mb-4">
                       Załączniki:
                     </h3>
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-6">
                       {attachments.map((attachment, index) => (
                         <a
                           key={attachment.id || index}
@@ -136,7 +136,7 @@ export default function ClientsList({ daysAgo }) {
                           <img
                             src={attachment.url}
                             alt={`Załącznik ${index + 1}`}
-                            className="w-24 h-24 object-cover rounded-md border hover:shadow-lg transition-shadow duration-200"
+                            className="w-32 h-32 object-cover rounded-md border border-gray-300 hover:shadow-lg transition-shadow duration-200"
                           />
                         </a>
                       ))}
