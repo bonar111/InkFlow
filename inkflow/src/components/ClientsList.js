@@ -2,8 +2,8 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import axios from '../utils/axiosConfig'; // Importujemy skonfigurowaną instancję Axios
 import PropTypes from 'prop-types';
-import axios from '../utils/axiosConfig';
 
 export default function ClientsList({ daysAgo }) {
   // Stan przechowujący dane klientów
@@ -21,7 +21,7 @@ export default function ClientsList({ daysAgo }) {
     try {
       // Budujemy endpoint na podstawie daysAgo
       const endpoint = `/api/customercare/sessions/afterSession-${daysAgo}`;
-      
+
       // Wysyłamy zapytanie GET do API
       const response = await axios.get(endpoint);
 
@@ -29,7 +29,11 @@ export default function ClientsList({ daysAgo }) {
       setClients(response.data);
     } catch (err) {
       // Jeśli wystąpił błąd, ustawiamy stan błędu
-      setError(err.message || 'Wystąpił błąd podczas pobierania danych.');
+      if (err.response && err.response.data && err.response.data.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError(err.message || 'Wystąpił błąd podczas pobierania danych.');
+      }
     } finally {
       // Kończymy stan ładowania
       setLoading(false);
@@ -58,8 +62,38 @@ export default function ClientsList({ daysAgo }) {
         <ul className="space-y-4">
           {clients.map((client) => (
             <li key={client.id} className="p-4 border rounded shadow-sm">
+              {/* Imię i Nazwisko Klienta */}
               <h2 className="text-lg font-semibold">{client.name}</h2>
-              <p>Tatuaż: {client.tattoo}</p>
+
+              {/* Email Klienta (jeśli dostępny) */}
+              {client.email && (
+                <p>
+                  <strong>Email:</strong>{' '}
+                  <a href={`mailto:${client.email}`} className="text-blue-500 underline">
+                    {client.email}
+                  </a>
+                </p>
+              )}
+
+              {/* Ostatnia Sesja */}
+              {client.lastSession && (
+                <div className="mt-2">
+                  <h3 className="font-medium">Ostatnia Sesja:</h3>
+                  <p>
+                    <strong>Data:</strong> {new Date(client.lastSession.date).toLocaleString()}
+                  </p>
+                  {client.lastSession.descriptionFromCalendar && (
+                    <p>
+                      <strong>Opis:</strong> {client.lastSession.descriptionFromCalendar}
+                    </p>
+                  )}
+                  {client.lastSession.artist && (
+                    <p>
+                      <strong>Artysta:</strong> {client.lastSession.artist.name}
+                    </p>
+                  )}
+                </div>
+              )}
             </li>
           ))}
         </ul>
