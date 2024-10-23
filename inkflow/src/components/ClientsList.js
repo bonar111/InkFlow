@@ -45,24 +45,12 @@ export default function ClientsList({ daysAgo }) {
     fetchClients();
   }, [daysAgo]);
 
-  // Funkcja do agregowania załączników z lastSession i completedSessions (jeśli potrzebne)
-  const getAllAttachments = (client) => {
-    const attachments = [];
-
-    if (client.lastSession && client.lastSession.attachments) {
-      attachments.push(...client.lastSession.attachments);
+  // Funkcja do agregowania załączników z lastSession
+  const getAttachments = (client) => {
+    if (client.lastSession && Array.isArray(client.lastSession.attachments)) {
+      return client.lastSession.attachments;
     }
-
-    // Jeśli planujesz później używać completedSessions, możesz to rozwinąć
-    // if (client.completedSessions && Array.isArray(client.completedSessions)) {
-    //   client.completedSessions.forEach((session) => {
-    //     if (session.attachments && session.attachments.length > 0) {
-    //       attachments.push(...session.attachments);
-    //     }
-    //   });
-    // }
-
-    return attachments;
+    return [];
   };
 
   // Renderowanie stanu ładowania
@@ -79,17 +67,17 @@ export default function ClientsList({ daysAgo }) {
   return (
     <div className="container mx-auto px-4">
       {clients.length > 0 ? (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul className="space-y-6">
           {clients.map((client) => {
-            const attachments = getAllAttachments(client);
+            const attachments = getAttachments(client);
 
             return (
               <li
                 key={client.id}
-                className="bg-white shadow-md rounded-lg p-6 flex flex-col"
+                className="bg-white shadow-md rounded-lg p-6 flex flex-col hover:shadow-lg transition-shadow duration-300"
               >
                 {/* Imię i Nazwisko Klienta */}
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-2xl font-semibold text-gray-800">
                   {client.name}
                 </h2>
 
@@ -109,21 +97,21 @@ export default function ClientsList({ daysAgo }) {
                 {/* Ostatnia Sesja */}
                 {client.lastSession && (
                   <div className="mt-4">
-                    <h3 className="text-lg font-medium text-gray-700">
+                    <h3 className="text-xl font-medium text-gray-700">
                       Ostatnia Sesja:
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 mt-1">
                       <strong>Data:</strong>{" "}
                       {new Date(client.lastSession.date).toLocaleString()}
                     </p>
                     {client.lastSession.descriptionFromCalendar && (
-                      <p className="text-gray-600">
+                      <p className="text-gray-600 mt-1">
                         <strong>Opis:</strong>{" "}
                         {client.lastSession.descriptionFromCalendar}
                       </p>
                     )}
                     {client.lastSession.artist && (
-                      <p className="text-gray-600">
+                      <p className="text-gray-600 mt-1">
                         <strong>Artysta:</strong> {client.lastSession.artist.name}
                       </p>
                     )}
@@ -133,7 +121,7 @@ export default function ClientsList({ daysAgo }) {
                 {/* Załączniki */}
                 {attachments.length > 0 && (
                   <div className="mt-4">
-                    <h3 className="text-lg font-medium text-gray-700 mb-2">
+                    <h3 className="text-xl font-medium text-gray-700 mb-2">
                       Załączniki:
                     </h3>
                     <div className="flex flex-wrap gap-4">
