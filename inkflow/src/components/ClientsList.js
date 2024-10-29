@@ -36,8 +36,8 @@ export default function ClientsList({ daysAgo }) {
   }, [daysAgo]);
 
   const getAttachments = (client) => {
-    if (client.lastSession && Array.isArray(client.lastSession.attachments)) {
-      return client.lastSession.attachments;
+    if (client.session && Array.isArray(client.session.attachments)) {
+      return client.session.attachments;
     }
     return [];
   };
@@ -78,24 +78,24 @@ export default function ClientsList({ daysAgo }) {
                   </p>
                 )}
 
-                {client.lastSession && (
+                {client.session && (
                   <div className="mt-4">
                     <h3 className="text-xl font-medium text-gray-700">
                       Ostatnia Sesja:
                     </h3>
                     <p className="text-gray-600 mt-1">
                       <strong>Data:</strong>{" "}
-                      {new Date(client.lastSession.date).toLocaleString()}
+                      {new Date(client.session.date).toLocaleString()}
                     </p>
-                    {client.lastSession.descriptionFromCalendar && (
+                    {client.session.descriptionFromCalendar && (
                       <p className="text-gray-600 mt-1">
                         <strong>Opis:</strong>{" "}
-                        {client.lastSession.descriptionFromCalendar}
+                        {client.session.descriptionFromCalendar}
                       </p>
                     )}
-                    {client.lastSession.artist && (
+                    {client.session.artist && (
                       <p className="text-gray-600 mt-1">
-                        <strong>Artysta:</strong> {client.lastSession.artist.name}
+                        <strong>Artysta:</strong> {client.session.artist.name}
                       </p>
                     )}
                   </div>
