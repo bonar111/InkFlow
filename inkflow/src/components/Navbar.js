@@ -14,6 +14,9 @@ export default function Navbar() {
           <li>
             <Link href="/marketing">Marketing</Link>
           </li>
+          <li>
+            <Link href="/audits">Rozliczenia sesji</Link>
+          </li>
         </ul>
       </div>
     </nav>
