@@ -17,12 +17,12 @@ export default function SessionAuditForm({ sessionId }) {
 
   const [sessionData, setSessionData] = useState(null);
   const [error, setError] = useState(null);
-  const [loadingSessionData, setLoadingSessionData] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   // Pobierz dane sesji i klienta po załadowaniu komponentu
   useEffect(() => {
     const fetchSessionData = async () => {
-      setLoadingSessionData(true);
+      setLoading(true);
       try {
         const response = await axios.get(`/api/finance/session-before-audit`, {
           params: { sessionId },
@@ -37,32 +37,34 @@ export default function SessionAuditForm({ sessionId }) {
           ClientId: data.id || data.Id || "",
         }));
       } catch (err) {
+        let errorMessage = "Wystąpił błąd podczas pobierania danych sesji.";
         if (err.response) {
           const { status, data } = err.response;
-          if (status === 400) {
-            setError(data || "Nieprawidłowe dane wejściowe.");
-          } else if (status === 404) {
-            setError(data || "Nie znaleziono sesji o podanym ID.");
-          } else if (status === 409) {
-            setError(data || "Sesja została już rozliczona.");
+          if (status === 400 || status === 404 || status === 409) {
+            if (typeof data === 'string') {
+              errorMessage = data;
+            } else if (data && data.title) {
+              errorMessage = data.title;
+            } else {
+              errorMessage = "Nie znaleziono danych dla podanej sesji lub sesja została już rozliczona.";
+            }
           } else if (status === 500) {
-            setError("Wystąpił błąd serwera. Spróbuj ponownie później.");
+            errorMessage = "Wystąpił błąd serwera. Spróbuj ponownie później.";
           } else {
-            setError("Wystąpił nieznany błąd.");
+            errorMessage = data?.message || errorMessage;
           }
         } else {
-          setError(err.message || "Wystąpił błąd podczas pobierania danych sesji.");
+          errorMessage = err.message || errorMessage;
         }
+        console.error(err); // Logowanie błędu do konsoli
+        setError(errorMessage);
       } finally {
-        setLoadingSessionData(false);
+        setLoading(false);
       }
     };
 
     if (sessionId) {
       fetchSessionData();
-    } else {
-      setError("Brak ID sesji.");
-      setLoadingSessionData(false);
     }
   }, [sessionId]);
 
@@ -96,20 +98,27 @@ export default function SessionAuditForm({ sessionId }) {
       // Obsługa sukcesu (np. przekierowanie lub wyświetlenie komunikatu)
       alert("Sesja została pomyślnie rozliczona.");
     } catch (err) {
+      let errorMessage = "Wystąpił błąd podczas rozliczania sesji.";
       if (err.response) {
         const { status, data } = err.response;
-        if (status === 400) {
-          setError(data || "Nieprawidłowe dane wejściowe.");
-        } else if (status === 409) {
-          setError(data || "Sesja została już rozliczona.");
+        if (status === 400 || status === 409) {
+          if (typeof data === 'string') {
+            errorMessage = data;
+          } else if (data && data.title) {
+            errorMessage = data.title;
+          } else {
+            errorMessage = "Nie można rozliczyć tej sesji.";
+          }
         } else if (status === 500) {
-          setError("Wystąpił błąd serwera. Spróbuj ponownie później.");
+          errorMessage = "Wystąpił błąd serwera. Spróbuj ponownie później.";
         } else {
-          setError("Wystąpił nieznany błąd.");
+          errorMessage = data?.message || errorMessage;
         }
       } else {
-        setError(err.message || "Wystąpił błąd podczas rozliczania sesji.");
+        errorMessage = err.message || errorMessage;
       }
+      console.error(err); // Logowanie błędu do konsoli
+      setError(errorMessage);
     }
   };
 
@@ -129,28 +138,16 @@ export default function SessionAuditForm({ sessionId }) {
     }
   };
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
+  if (loading) {
+    return <p className="text-gray-500">Ładowanie danych sesji...</p>;
   }
 
-  if (loadingSessionData) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-gray-500">Ładowanie danych sesji...</p>
-      </div>
-    );
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
   }
 
   if (!sessionData) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-red-500">Nie znaleziono danych sesji.</p>
-      </div>
-    );
+    return <p className="text-gray-500">Brak danych do wyświetlenia.</p>;
   }
 
   return (
@@ -184,7 +181,6 @@ export default function SessionAuditForm({ sessionId }) {
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded"
             required
-            min="0"
           />
         </div>
 
