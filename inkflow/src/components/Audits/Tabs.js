@@ -1,8 +1,7 @@
-// src/components/Tabs.js
 "use client";
 
 import { useState } from 'react';
-import ClientsList from './ClientsList'; // Importujemy komponent do wyświetlania klientów
+import ClientsList from './ClientsList'; 
 import { startOfMonth, endOfMonth, subMonths } from 'date-fns';
 
 export default function Tabs() {

@@ -1,14 +1,9 @@
-// src/components/Audits/SessionAuditForm.js
 "use client";
 
 import React, { useState } from "react";
 import axios from "../../utils/axiosConfig";
-import { useRouter } from 'next/router';
 
-export default function SessionAuditForm() {
-  const router = useRouter();
-  const { sessionId } = router.query; // Pobierz sessionId z URL
-
+export default function SessionAuditForm({ sessionId }) {
   const [formData, setFormData] = useState({
     SessionId: sessionId || "",
     ClientId: "",

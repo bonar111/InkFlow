@@ -1,10 +1,10 @@
-// src/components/ClientsList.js
 "use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/axiosConfig";
 import PropTypes from "prop-types";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ClientsList({ startDate, endDate }) {
   const [clients, setClients] = useState([]);
@@ -133,12 +133,14 @@ export default function ClientsList({ startDate, endDate }) {
 
                 {/* Dodanie przycisku "rozlicz" */}
                 <div className="mt-6">
-                  <button
-                    onClick={() => window.open(`/audit/session/${session.id || session.Id}`, '_blank')}
-                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-200"
+                <Link
+                    href={`/audit/session/${session.id || session.Id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-200 text-center"
                   >
                     Rozlicz
-                  </button>
+                  </Link>
                 </div>
               </li>
             );
