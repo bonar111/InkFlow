@@ -1,6 +1,8 @@
+// src/app/components/Audits/SessionAuditForm.js
+
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../utils/axiosConfig";
 
 export default function SessionAuditForm({ sessionId }) {
@@ -13,7 +15,56 @@ export default function SessionAuditForm({ sessionId }) {
     TattooPhotos: [],
   });
 
+  const [sessionData, setSessionData] = useState(null);
   const [error, setError] = useState(null);
+  const [loadingSessionData, setLoadingSessionData] = useState(true);
+
+  // Pobierz dane sesji i klienta po załadowaniu komponentu
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      setLoadingSessionData(true);
+      try {
+        const response = await axios.get(`/api/finance/session-before-audit`, {
+          params: { sessionId },
+        });
+        const data = response.data;
+
+        setSessionData(data);
+
+        // Ustaw ClientId w formData
+        setFormData((prevData) => ({
+          ...prevData,
+          ClientId: data.id || data.Id || "",
+        }));
+      } catch (err) {
+        if (err.response) {
+          const { status, data } = err.response;
+          if (status === 400) {
+            setError(data || "Nieprawidłowe dane wejściowe.");
+          } else if (status === 404) {
+            setError(data || "Nie znaleziono sesji o podanym ID.");
+          } else if (status === 409) {
+            setError(data || "Sesja została już rozliczona.");
+          } else if (status === 500) {
+            setError("Wystąpił błąd serwera. Spróbuj ponownie później.");
+          } else {
+            setError("Wystąpił nieznany błąd.");
+          }
+        } else {
+          setError(err.message || "Wystąpił błąd podczas pobierania danych sesji.");
+        }
+      } finally {
+        setLoadingSessionData(false);
+      }
+    };
+
+    if (sessionId) {
+      fetchSessionData();
+    } else {
+      setError("Brak ID sesji.");
+      setLoadingSessionData(false);
+    }
+  }, [sessionId]);
 
   // Obsługa wysłania formularza
   const handleSubmit = async (e) => {
@@ -45,8 +96,20 @@ export default function SessionAuditForm({ sessionId }) {
       // Obsługa sukcesu (np. przekierowanie lub wyświetlenie komunikatu)
       alert("Sesja została pomyślnie rozliczona.");
     } catch (err) {
-      // Obsługa błędu
-      setError(err.message || "Wystąpił błąd podczas rozliczania sesji.");
+      if (err.response) {
+        const { status, data } = err.response;
+        if (status === 400) {
+          setError(data || "Nieprawidłowe dane wejściowe.");
+        } else if (status === 409) {
+          setError(data || "Sesja została już rozliczona.");
+        } else if (status === 500) {
+          setError("Wystąpił błąd serwera. Spróbuj ponownie później.");
+        } else {
+          setError("Wystąpił nieznany błąd.");
+        }
+      } else {
+        setError(err.message || "Wystąpił błąd podczas rozliczania sesji.");
+      }
     }
   };
 
@@ -66,38 +129,47 @@ export default function SessionAuditForm({ sessionId }) {
     }
   };
 
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
+  if (loadingSessionData) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p className="text-gray-500">Ładowanie danych sesji...</p>
+      </div>
+    );
+  }
+
+  if (!sessionData) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p className="text-red-500">Nie znaleziono danych sesji.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">Rozlicz Sesję</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit}>
-        {/* SessionId */}
+        {/* Wyświetlenie informacji o sesji i kliencie */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            ID Sesji
-          </label>
-          <input
-            type="text"
-            name="SessionId"
-            value={formData.SessionId}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
-            readOnly
-          />
-        </div>
-
-        {/* ClientId */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            ID Klienta
-          </label>
-          <input
-            type="text"
-            name="ClientId"
-            value={formData.ClientId}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
-          />
+          <p>
+            <strong>Klient:</strong> {sessionData.name || sessionData.Name}
+          </p>
+          <p>
+            <strong>Email:</strong> {sessionData.email || sessionData.Email}
+          </p>
+          <p>
+            <strong>Data sesji:</strong>{" "}
+            {new Date(sessionData.session.date || sessionData.session.Date).toLocaleString()}
+          </p>
         </div>
 
         {/* FinalPrice */}
@@ -111,6 +183,8 @@ export default function SessionAuditForm({ sessionId }) {
             value={formData.FinalPrice}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded"
+            required
+            min="0"
           />
         </div>
 
@@ -125,6 +199,7 @@ export default function SessionAuditForm({ sessionId }) {
             value={formData.ProcessedBy}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded"
+            required
           />
         </div>
 
