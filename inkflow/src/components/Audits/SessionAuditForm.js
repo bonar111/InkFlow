@@ -10,7 +10,7 @@ export default function SessionAuditForm({ sessionId }) {
     SessionId: sessionId || "",
     ClientId: "",
     FinalPrice: "",
-    ProcessedBy: "",
+    ProcessedBy: "Marzena Bonar",
     LegalDocumentsPhotos: [],
     TattooPhotos: [],
   });
