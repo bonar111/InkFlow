@@ -19,7 +19,7 @@ export default function Tabs() {
     {
       label: '14 dni temu',
       daysAgo: 14,
-      message: `Hej! 💫 Twoja opinia jest dla nas bardzo cenna, dlatego mamy krótką ankietę, która pomoże nam doskonalić nasze usługi 🌱. Jeśli możesz poświęcić pół minuty, będziemy bardzo wdzięczni! 🫶 Dziękujemy za czas i wsparcie! [Link do ankiety]`,
+      message: `Hej! 💫 Twoja opinia jest dla nas bardzo cenna, dlatego mamy krótką ankietę, która pomoże nam doskonalić nasze usługi 🌱. Jeśli możesz poświęcić pół minuty, będziemy bardzo wdzięczni! 🫶 Dziękujemy za czas i wsparcie! https://forms.gle/AnMQ4qrkjw1teuHy7`,
     },
     {
       label: '30 dni temu',
