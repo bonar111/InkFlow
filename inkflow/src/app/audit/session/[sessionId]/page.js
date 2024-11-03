@@ -7,7 +7,7 @@ export default async function SessionAuditPage({ params }) {
 
   return (
     <main className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Rozliczanie Sesji</h1>
+      <h1 className="text-2xl font-bold mb-4">Nie rozliczone sesje</h1>
       <SessionAuditForm sessionId={sessionId} />
     </main>
   );

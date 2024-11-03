@@ -172,7 +172,7 @@ export default function SessionAuditForm({ sessionId }) {
         {/* FinalPrice */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Cena Końcowa
+            Cena Końcowa(razem z zadatkiem):
           </label>
           <input
             type="number"
@@ -187,7 +187,7 @@ export default function SessionAuditForm({ sessionId }) {
         {/* ProcessedBy */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Przetworzone przez
+            Rozliczone przez przez:
           </label>
           <input
             type="text"

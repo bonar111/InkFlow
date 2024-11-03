@@ -27,7 +27,7 @@ export default function Tabs() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Lista Klientów</h1>
+      {/* <h1 className="text-3xl font-bold mb-4">Lista Klientów</h1> */}
       <div className="flex space-x-4 mb-4">
         {tabs.map(tab => (
           <button
