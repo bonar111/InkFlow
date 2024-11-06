@@ -1,4 +1,3 @@
-// src/components/Tabs.js
 "use client";
 
 import { useState } from 'react';
@@ -9,7 +8,7 @@ export default function Tabs() {
     {
       label: '1 dzień temu',
       daysAgo: 1,
-      message: `Dzień dobry! 🌟 Jak samopoczucie po naszej sesji? Mam nadzieję, że tatuaż prezentuje się świetnie! ✨ Pamiętaj o odpowiedniej pielęgnacji – to klucz do tego, aby tatuaż wyglądał perfekcyjnie przez długi czas 🧴. Jeśli będziesz mieć pytania, śmiało pisz – jestem tutaj, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
+      message: `Hej! 🌟 Jak się czujesz po naszej sesji? Mam nadzieję, że tatuaż prezentuje się świetnie! ✨ Pamiętaj o odpowiedniej pielęgnacji – to klucz do tego, aby tatuaż wyglądał perfekcyjnie przez długi czas 🧴. Jeśli będziesz mieć pytania, śmiało pisz – jestem tutaj, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
     },
     {
       label: '14 dni temu',
@@ -54,17 +53,17 @@ export default function Tabs() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Pasek zakładek */}
-      <div className="flex overflow-x-auto border-b mb-4">
+      <div className="flex flex-wrap border-b mb-6">
         {tabs.map((tab) => (
           <button
             key={tab.daysAgo}
             onClick={() => setActiveTab(tab)}
-            className={`flex-shrink-0 px-4 py-2 -mb-px font-semibold border-b-2 ${
+            className={`px-4 py-2 mr-2 mb-2 sm:mb-0 font-semibold border-b-2 rounded-t-lg transition-colors duration-200 ${
               activeTab.daysAgo === tab.daysAgo
-                ? 'border-blue-500 text-blue-500'
-                : 'border-transparent text-gray-600'
+                ? 'border-blue-500 text-blue-500 bg-blue-50'
+                : 'border-transparent text-gray-600 hover:text-blue-500 hover:border-blue-300'
             }`}
           >
             {tab.label}
@@ -73,15 +72,19 @@ export default function Tabs() {
       </div>
 
       {/* Tekst wiadomości i przycisk kopiowania */}
-      <div className="mb-4">
-        <p className="whitespace-pre-wrap text-gray-800">{activeTab.message}</p>
-        <button
-          onClick={handleCopy}
-          className="w-full mt-2 flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
-        >
-          Kopiuj tekst
-        </button>
-        {copySuccess && <p className="text-green-500 mt-2 text-center">{copySuccess}</p>}
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
+        <div className="flex-1">
+          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message}</p>
+        </div>
+        <div className="mt-4 lg:mt-0 lg:ml-4">
+          <button
+            onClick={handleCopy}
+            className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+          >
+            Kopiuj tekst
+          </button>
+          {copySuccess && <p className="text-green-500 mt-2 text-center sm:text-left">{copySuccess}</p>}
+        </div>
       </div>
 
       {/* Listing klientów */}
