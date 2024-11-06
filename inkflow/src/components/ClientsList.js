@@ -10,6 +10,7 @@ export default function ClientsList({ daysAgo }) {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sendingMessages, setSendingMessages] = useState({}); // Stan dla wysyłania wiadomości
 
   const fetchClients = async () => {
     setLoading(true);
@@ -40,6 +41,23 @@ export default function ClientsList({ daysAgo }) {
       return client.session.attachments;
     }
     return [];
+  };
+
+  const handleSendMessage = async (sessionId) => {
+    const messageType = `day_${daysAgo}`;
+    setSendingMessages(prev => ({ ...prev, [sessionId]: true })); // Ustawiamy stan ładowania dla konkretnej sesji
+    try {
+      await axios.post(`/api/customercare/sessions/sentmessage`, null, { 
+        params: { sessionId, messageType } 
+      });
+      // Po pomyślnym wysłaniu, odświeżamy listę klientów
+      fetchClients();
+    } catch (err) {
+      console.error('Error sending message:', err);
+      alert('Wystąpił błąd podczas wysyłania wiadomości.');
+    } finally {
+      setSendingMessages(prev => ({ ...prev, [sessionId]: false })); // Resetujemy stan ładowania
+    }
   };
 
   if (loading) {
@@ -127,6 +145,23 @@ export default function ClientsList({ daysAgo }) {
                     </div>
                   </div>
                 )}
+
+                {/* Przyciski do wysyłania wiadomości */}
+                <div className="mt-4">
+                  {!client.messageSent ? (
+                    <button
+                      onClick={() => handleSendMessage(client.session.id)}
+                      disabled={sendingMessages[client.session.id]}
+                      className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300 ${
+                        sendingMessages[client.session.id] ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      {sendingMessages[client.session.id] ? 'Wysyłanie...' : 'Wysłano wiadomość'}
+                    </button>
+                  ) : (
+                    <span className="text-green-600 font-medium">Wiadomość wysłana</span>
+                  )}
+                </div>
               </li>
             );
           })}
