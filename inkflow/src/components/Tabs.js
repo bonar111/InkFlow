@@ -9,32 +9,32 @@ export default function Tabs() {
     {
       label: '1 dzień temu',
       daysAgo: 1,
-      message: `Hej! 🌟 Jak się czujesz po naszej sesji? Mam nadzieję, że tatuaż prezentuje się świetnie! ✨ Pamiętaj o odpowiedniej pielęgnacji – to klucz do tego, aby tatuaż wyglądał perfekcyjnie przez długi czas 🧴. Jeśli będziesz mieć pytania, śmiało pisz – jestem tutaj, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
-    },
-    {
-      label: '10 dni temu',
-      daysAgo: 10,
-      message: `Cześć! 😊 Minęło już 10 dni – jak się miewa Twój tatuaż? Jak przebiega proces gojenia? Jeśli masz chwilkę, wyślij nam zdjęcie 📸 – z radością zobaczymy, jak się prezentuje! Czekam na wieści i życzę Ci wszystkiego dobrego ✨`,
+      message: `Dzień dobry! 🌟 Jak samopoczucie po naszej sesji? Mam nadzieję, że tatuaż prezentuje się świetnie! ✨ Pamiętaj o odpowiedniej pielęgnacji – to klucz do tego, aby tatuaż wyglądał perfekcyjnie przez długi czas 🧴. Jeśli będziesz mieć pytania, śmiało pisz – jestem tutaj, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
     },
     {
       label: '14 dni temu',
       daysAgo: 14,
-      message: `Hej! 💫 Twoja opinia jest dla nas bardzo cenna, dlatego mamy krótką ankietę, która pomoże nam doskonalić nasze usługi 🌱. Jeśli możesz poświęcić pół minuty, będziemy bardzo wdzięczni! 🫶 Dziękujemy za czas i wsparcie! https://forms.gle/AnMQ4qrkjw1teuHy7`,
+      message: `Dzień dobry! 😊 Minęło już 14 dni od wykonania tatuażu – mamy nadzieję, że proces gojenia przebiega pomyślnie. Jeśli mają Państwo chwilę, prosimy o przesłanie zdjęcia 📸 – z przyjemnością zobaczymy, jak tatuaż się prezentuje! Oczekujemy na wiadomość i życzymy wszystkiego dobrego ✨`,
+    },
+    {
+      label: '21 dni temu',
+      daysAgo: 21,
+      message: `Dzień dobry! 💫 Państwa opinia jest dla nas niezwykle cenna, dlatego przygotowaliśmy krótką ankietę, która pomoże nam udoskonalać nasze usługi 🌱. Wypełnienie zajmie jedynie pół minuty, a my będziemy ogromnie wdzięczni za poświęcony czas. 🫶 Dziękujemy serdecznie za wsparcie! https://forms.gle/AnMQ4qrkjw1teuHy7`,
     },
     {
       label: '30 dni temu',
       daysAgo: 30,
-      message: `Cześć! 🥳 Jeśli jesteś zadowolony/a z tatuażu i naszej współpracy, to mamy dla Ciebie specjalną ofertę! 🎉 Poleć nasze studio znajomym, a jeśli przynajmniej jedna osoba się zdecyduje, Ty dostaniesz 10% rabatu na kolejną sesję 🖤, a Twoja polecona osoba również otrzyma 10% zniżki! 🫶 Dzięki za wsparcie i do zobaczenia!`,
+      message: `Dzień dobry! 🥳 Jeśli jesteś zadowolony/a z tatuażu i naszej współpracy, to mamy dla Ciebie specjalną ofertę! 🎉 Poleć nasze studio znajomym, a jeśli przynajmniej jedna osoba się zdecyduje, Ty dostaniesz 10% rabatu na kolejną sesję 🖤, a Twoja polecona osoba również otrzyma 10% zniżki! 🫶 Dzięki za wsparcie i do zobaczenia!`,
     },
     {
       label: '90 dni temu',
       daysAgo: 90,
-      message: `Hej! 🌟 Minęły już trzy miesiące od naszej sesji – mam nadzieję, że Twój tatuaż jest zjawiskowy i cieszy Cię każdego dnia na nowo! 🎨 Jeśli zastanawiasz się nad czymś nowym lub chcesz rozbudować obecny projekt, przygotowaliśmy dla Ciebie kilka inspiracji, które idealnie go uzupełnią! 💡 Spójrz na nie i daj znać, co myślisz – zawsze chętnie stworzymy coś wyjątkowego razem z Tobą! 🖤`,
+      message: `Dzień dobry! 🥳 Minęły już trzy miesiące od naszej ostatniej sesji! 😊 Mamy nadzieję, że Twój tatuaż sprawia Ci radość każdego dnia. Jeśli zastanawiasz się nad kolejnym projektem lub chcesz rozbudować obecny, mamy dla Ciebie 10% rabatu! 🌟 Wystarczy, że umówisz się na termin w ciągu najbliższego tygodnia, a samą sesję możemy zaplanować na dowolny, dogodny dla Ciebie czas. Daj znać, jeśli jesteś zainteresowany/a – z przyjemnością stworzymy coś wyjątkowego! 🖤`,
     },
     {
       label: '180 dni temu',
       daysAgo: 180,
-      message: `Hej! ✨ Wiesz, że minęło już pół roku od naszego ostatniego spotkania? Może to idealny moment na nową przygodę z tatuażem? 🎨 Jeśli myślisz o kolejnym projekcie lub rozbudowie obecnego, mamy specjalną ofertę dla naszych stałych klientów 🖤. Z radością stworzymy dla Ciebie coś pięknego! Jeśli masz ochotę, napisz do nas – razem stworzymy coś wyjątkowego! 🫶`,
+      message: `Dzień dobry! ✨ Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli pojawił się pomysł na nowy projekt lub rozbudowę istniejącego, przygotowaliśmy specjalną ofertę dla stałych klientów 🖤. Z przyjemnością stworzymy coś wyjątkowego! W razie zainteresowania, zapraszamy do kontaktu – razem stworzymy coś niezapomnianego! 🫶`,
     },
   ];
 
