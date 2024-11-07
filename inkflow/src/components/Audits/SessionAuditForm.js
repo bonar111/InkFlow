@@ -15,7 +15,6 @@ export default function SessionAuditForm({ sessionId }) {
 
   const [errors, setErrors] = useState({
     FinalPrice: "",
-    // Możesz dodać inne pola, jeśli będą wymagały walidacji
   });
 
   const [sessionData, setSessionData] = useState(null);
@@ -44,12 +43,13 @@ export default function SessionAuditForm({ sessionId }) {
         if (err.response) {
           const { status, data } = err.response;
           if (status === 400 || status === 404 || status === 409) {
-            if (typeof data === 'string') {
+            if (typeof data === "string") {
               errorMessage = data;
             } else if (data && data.title) {
               errorMessage = data.title;
             } else {
-              errorMessage = "Nie znaleziono danych dla podanej sesji lub sesja została już rozliczona.";
+              errorMessage =
+                "Nie znaleziono danych dla podanej sesji lub sesja została już rozliczona.";
             }
           } else if (status === 500) {
             errorMessage = "Wystąpił błąd serwera. Spróbuj ponownie później.";
@@ -138,7 +138,7 @@ export default function SessionAuditForm({ sessionId }) {
       if (err.response) {
         const { status, data } = err.response;
         if (status === 400 || status === 409) {
-          if (typeof data === 'string') {
+          if (typeof data === "string") {
             errorMessage = data;
           } else if (data && data.title) {
             errorMessage = data.title;
@@ -180,47 +180,65 @@ export default function SessionAuditForm({ sessionId }) {
   };
 
   if (loading) {
-    return <p className="text-gray-500">Ładowanie danych sesji...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">Ładowanie danych sesji...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-red-500">{error}</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
   }
 
   if (!sessionData) {
-    return <p className="text-gray-500">Brak danych do wyświetlenia.</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500">Brak danych do wyświetlenia.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Rozlicz Sesję</h1>
+    <div className="container mx-auto px-4 py-8 max-w-2xl">
+      <h1 className="text-3xl font-bold mb-6 text-center">Rozlicz Sesję</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
         {/* Wyświetlenie informacji o sesji i kliencie */}
-        <div className="mb-4">
-          <p>
-            <strong>Klient:</strong> {sessionData.name || sessionData.Name}
-          </p>
-          <p>
-            <strong>Email:</strong> {sessionData.email || sessionData.Email}
-          </p>
-          <p>
-            <strong>Data sesji:</strong>{" "}
-            {new Date(sessionData.session.date || sessionData.session.Date).toLocaleString()}
-          </p>
+        <div className="mb-6">
+          <h2 className="text-xl font-semibold mb-4">Informacje o sesji</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <p>
+              <span className="font-medium">Klient:</span> {sessionData.name || sessionData.Name}
+            </p>
+            <p>
+              <span className="font-medium">Email:</span> {sessionData.email || sessionData.Email}
+            </p>
+            <p>
+              <span className="font-medium">Data sesji:</span>{" "}
+              {new Date(
+                sessionData.session.date || sessionData.session.Date
+              ).toLocaleString()}
+            </p>
+          </div>
         </div>
 
         {/* FinalPrice */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+        <div className="mb-6">
+          <label htmlFor="FinalPrice" className="block text-gray-700 font-semibold mb-2">
             Cena Końcowa (razem z zadatkiem):
           </label>
           <input
             type="number"
             name="FinalPrice"
+            id="FinalPrice"
             value={formData.FinalPrice}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded ${
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
               errors.FinalPrice ? "border-red-500" : "border-gray-300"
             }`}
             required
@@ -234,52 +252,55 @@ export default function SessionAuditForm({ sessionId }) {
         </div>
 
         {/* ProcessedBy */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+        <div className="mb-6">
+          <label htmlFor="ProcessedBy" className="block text-gray-700 font-semibold mb-2">
             Rozliczone przez:
           </label>
           <input
             type="text"
             name="ProcessedBy"
+            id="ProcessedBy"
             value={formData.ProcessedBy}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
         {/* LegalDocumentsPhotos */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+        <div className="mb-6">
+          <label htmlFor="LegalDocumentsPhotos" className="block text-gray-700 font-semibold mb-2">
             Zdjęcia Dokumentów Prawnych
           </label>
           <input
             type="file"
             name="LegalDocumentsPhotos"
+            id="LegalDocumentsPhotos"
             multiple
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full"
           />
         </div>
 
         {/* TattooPhotos */}
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+        <div className="mb-6">
+          <label htmlFor="TattooPhotos" className="block text-gray-700 font-semibold mb-2">
             Zdjęcia Tatuażu
           </label>
           <input
             type="file"
             name="TattooPhotos"
+            id="TattooPhotos"
             multiple
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className="w-full"
           />
         </div>
 
         {/* Przycisk wysyłania */}
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+          className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition duration-200"
         >
           Rozlicz Sesję
         </button>
