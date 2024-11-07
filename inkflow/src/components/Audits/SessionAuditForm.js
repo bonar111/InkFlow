@@ -1,5 +1,3 @@
-// src/app/components/Audits/SessionAuditForm.js
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -13,6 +11,11 @@ export default function SessionAuditForm({ sessionId }) {
     ProcessedBy: "Marzena Bonar",
     LegalDocumentsPhotos: [],
     TattooPhotos: [],
+  });
+
+  const [errors, setErrors] = useState({
+    FinalPrice: "",
+    // Możesz dodać inne pola, jeśli będą wymagały walidacji
   });
 
   const [sessionData, setSessionData] = useState(null);
@@ -68,10 +71,42 @@ export default function SessionAuditForm({ sessionId }) {
     }
   }, [sessionId]);
 
+  // Funkcja walidująca FinalPrice
+  const validateFinalPrice = (value) => {
+    let error = "";
+
+    if (value === "") {
+      error = "Cena końcowa jest wymagana.";
+    } else {
+      const numberValue = Number(value);
+
+      if (!Number.isInteger(numberValue)) {
+        error = "Cena musi być liczbą całkowitą.";
+      } else if (numberValue < 0 || numberValue > 5000) {
+        error = "Cena musi być w zakresie od 0 do 5000.";
+      }
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      FinalPrice: error,
+    }));
+
+    return error === "";
+  };
+
   // Obsługa wysłania formularza
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+
+    // Przeprowadź walidację FinalPrice przed wysłaniem formularza
+    const isFinalPriceValid = validateFinalPrice(formData.FinalPrice);
+
+    if (!isFinalPriceValid) {
+      // Możesz dodać więcej walidacji dla innych pól tutaj
+      return; // Zatrzymaj wysyłanie formularza, jeśli walidacja nie powiodła się
+    }
 
     try {
       // Przygotuj dane formularza do wysłania
@@ -97,6 +132,7 @@ export default function SessionAuditForm({ sessionId }) {
 
       // Obsługa sukcesu (np. przekierowanie lub wyświetlenie komunikatu)
       alert("Sesja została pomyślnie rozliczona.");
+      // Opcjonalnie: możesz zresetować formularz lub przekierować użytkownika
     } catch (err) {
       let errorMessage = "Wystąpił błąd podczas rozliczania sesji.";
       if (err.response) {
@@ -135,6 +171,11 @@ export default function SessionAuditForm({ sessionId }) {
         ...prevData,
         [name]: value,
       }));
+
+      // Jeśli zmienia się FinalPrice, przeprowadź walidację na bieżąco
+      if (name === "FinalPrice") {
+        validateFinalPrice(value);
+      }
     }
   };
 
@@ -172,22 +213,30 @@ export default function SessionAuditForm({ sessionId }) {
         {/* FinalPrice */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Cena Końcowa(razem z zadatkiem):
+            Cena Końcowa (razem z zadatkiem):
           </label>
           <input
             type="number"
             name="FinalPrice"
             value={formData.FinalPrice}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded"
+            className={`w-full px-3 py-2 border rounded ${
+              errors.FinalPrice ? "border-red-500" : "border-gray-300"
+            }`}
             required
+            min="0"
+            max="5000"
+            step="1"
           />
+          {errors.FinalPrice && (
+            <p className="text-red-500 text-sm mt-1">{errors.FinalPrice}</p>
+          )}
         </div>
 
         {/* ProcessedBy */}
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2">
-            Rozliczone przez przez:
+            Rozliczone przez:
           </label>
           <input
             type="text"
