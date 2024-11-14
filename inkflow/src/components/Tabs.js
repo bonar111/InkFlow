@@ -6,7 +6,7 @@ import ClientsList from './ClientsList'; // Importujemy komponent do wyświetlan
 export default function Tabs() {
   const tabs = [
     {
-      label: '1 dzień temu',
+      label: '2 dni temu',
       daysAgo: 2,
       message1: `Dzień dobry! 🌟 Jak się Pani czuje po ostatniej sesji w naszym studiu? Mam nadzieję, że tatuaż prezentuje się wspaniale! ✨ Przypominam o odpowiedniej pielęgnacji – to klucz, aby efekt cieszył przez długi czas 🧴. W razie jakichkolwiek pytań, proszę śmiało pisać – zespół studia jest tu, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
       message2: `Cześć! 🌟 Jak się czujesz po naszej ostatniej sesji? Mam nadzieję, że tatuaż wygląda świetnie i że jesteś zadowolona z efektu! ✨ Pamiętaj o pielęgnacji – to klucz, aby tatuaż zachował piękny wygląd na lata 🧴. Jeśli masz pytania, śmiało pisz – jestem tu, żeby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`
