@@ -7,33 +7,36 @@ export default function Tabs() {
   const tabs = [
     {
       label: '1 dzień temu',
-      daysAgo: 1,
-      message: `Hej! 🌟 Jak się czujesz po naszej sesji? Mam nadzieję, że tatuaż prezentuje się świetnie! ✨ Pamiętaj o odpowiedniej pielęgnacji – to klucz do tego, aby tatuaż wyglądał perfekcyjnie przez długi czas 🧴. Jeśli będziesz mieć pytania, śmiało pisz – jestem tutaj, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
+      daysAgo: 2,
+      message1: `Dzień dobry! 🌟 Jak się Pani czuje po ostatniej sesji w naszym studiu? Mam nadzieję, że tatuaż prezentuje się wspaniale! ✨ Przypominam o odpowiedniej pielęgnacji – to klucz, aby efekt cieszył przez długi czas 🧴. W razie jakichkolwiek pytań, proszę śmiało pisać – zespół studia jest tu, aby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`,
+      message2: `Cześć! 🌟 Jak się czujesz po naszej ostatniej sesji? Mam nadzieję, że tatuaż wygląda świetnie i że jesteś zadowolona z efektu! ✨ Pamiętaj o pielęgnacji – to klucz, aby tatuaż zachował piękny wygląd na lata 🧴. Jeśli masz pytania, śmiało pisz – jestem tu, żeby pomóc! 🙌 Życzę szybkiego gojenia i pięknego efektu! 💖`
     },
     {
       label: '14 dni temu',
       daysAgo: 14,
-      message: `Dzień dobry! 😊 Minęło już 14 dni od wykonania tatuażu – mamy nadzieję, że proces gojenia przebiega pomyślnie. Jeśli mają Państwo chwilę, prosimy o przesłanie zdjęcia 📸 – z przyjemnością zobaczymy, jak tatuaż się prezentuje! Oczekujemy na wiadomość i życzymy wszystkiego dobrego ✨`,
+      message1: `Dzień dobry! 😊 Minęły już dwa tygodnie od wykonania tatuażu – mam nadzieję, że proces gojenia przebiega pomyślnie. Jeśli to możliwe, prosimy o przesłanie zdjęcia 📸 (najlepiej w świetle dziennym) – z przyjemnością zobaczymy, jak tatuaż się prezentuje! Czekamy na wiadomość i życzymy wszystkiego dobrego ✨`,
+      message2: `Cześć! 😊 Minęły już dwa tygodnie od naszego spotkania – mam nadzieję, że gojenie przebiega bez problemów. Jeśli możesz, podeślij mi zdjęcie tatuażu 📸 (najlepiej w świetle dziennym) – chętnie zobaczę, jak się prezentuje! Czekam na wiadomość i życzę wszystkiego dobrego ✨`
     },
     {
       label: '21 dni temu',
       daysAgo: 21,
-      message: `Dzień dobry! 💫 Państwa opinia jest dla nas niezwykle cenna, dlatego przygotowaliśmy krótką ankietę, która pomoże nam udoskonalać nasze usługi 🌱. Wypełnienie zajmie jedynie pół minuty, a my będziemy ogromnie wdzięczni za poświęcony czas. 🫶 Dziękujemy serdecznie za wsparcie! https://forms.gle/AnMQ4qrkjw1teuHy7`,
+      message1: `Dzień dobry! 💫 Tu Martyna, menadżerka naszego studia. Minęły już 3 tygodnie od Państwa wizyty – mam nadzieję, że tatuaż przynosi wiele satysfakcji! Byłabym bardzo wdzięczna, gdyby mogli Państwo podzielić się swoimi wrażeniami z wizyty, abyśmy mogli jeszcze lepiej dostosować nasze usługi do oczekiwań klientów. Przygotowaliśmy krótką ankietę, której wypełnienie zajmie dosłownie chwilę, a każda odpowiedź jest dla nas bardzo cenna 🌱. Z góry dziękuję za poświęcony czas i wsparcie! 🫶 https://forms.gle/AnMQ4qrkjw1teuHy7`,
     },
     {
       label: '30 dni temu',
       daysAgo: 30,
-      message: `Dzień dobry! 🥳 Jeśli jesteś zadowolony/a z tatuażu i naszej współpracy, to mamy dla Ciebie specjalną ofertę! 🎉 Poleć nasze studio znajomym, a jeśli przynajmniej jedna osoba się zdecyduje, Ty dostaniesz 10% rabatu na kolejną sesję 🖤, a Twoja polecona osoba również otrzyma 10% zniżki! 🫶 Dzięki za wsparcie i do zobaczenia!`,
+      message1: `Witam ponownie! 🥳 Jeśli jest Pani/Pan zadowolona/y z tatuażu i naszej współpracy, to mamy specjalną ofertę! 🎉 Poleć nasze studio znajomym, a jeśli przynajmniej jedna osoba się zdecyduje, Ty dostaniesz 10% rabatu na kolejną sesję 🖤, a Twoja polecona osoba również otrzyma 10% zniżki! 🫶 Dzięki za wsparcie i do zobaczenia!`,
     },
     {
       label: '90 dni temu',
       daysAgo: 90,
-      message: `Dzień dobry! 🥳 Minęły już trzy miesiące od naszej ostatniej sesji! 😊 Mamy nadzieję, że Twój tatuaż sprawia Ci radość każdego dnia. Jeśli zastanawiasz się nad kolejnym projektem lub chcesz rozbudować obecny, mamy dla Ciebie 10% rabatu! 🌟 Wystarczy, że umówisz się na termin w ciągu najbliższego tygodnia, a samą sesję możemy zaplanować na dowolny, dogodny dla Ciebie czas. Daj znać, jeśli jesteś zainteresowany/a – z przyjemnością stworzymy coś wyjątkowego! 🖤`,
+      message1: `Dzień dobry! 🥳 Minęły już trzy miesiące od ostatniej wizyty w naszym studiu 😊 Mamy nadzieję, że tatuaż przynosi codzienną radość! Jeśli rozważa Pan/i nowy projekt lub rozbudowę obecnego, mamy przyjemność zaoferować 10% rabatu 🌟. Wystarczy, że zarezerwujesz termin w ciągu najbliższego tygodnia, a samą sesję możemy umówić na dowolny, dogodny czas. Zachęcam do kontaktu – z radością stworzymy coś wyjątkowego! 🖤`,
+      message2: `Cześć! 😊 Minęły już trzy miesiące od naszej ostatniej sesji – mam nadzieję, że tatuaż przynosi Ci mnóstwo radości każdego dnia! Jeśli zastanawiasz się nad kolejnym projektem lub chcesz rozbudować obecny, z przyjemnością pomogę stworzyć coś wyjątkowego 🌟. Daj znać, jeśli masz pomysł – chętnie pomogę go zrealizować! 🖤`
     },
     {
       label: '180 dni temu',
       daysAgo: 180,
-      message: `Dzień dobry! ✨ Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli pojawił się pomysł na nowy projekt lub rozbudowę istniejącego, przygotowaliśmy specjalną ofertę dla stałych klientów 🖤. Z przyjemnością stworzymy coś wyjątkowego! W razie zainteresowania, zapraszamy do kontaktu – razem stworzymy coś niezapomnianego! 🫶`,
+      message1: `Dzień dobry! ✨ Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli pojawił się pomysł na nowy projekt lub rozbudowę istniejącego, przygotowałam specjalną ofertę dla stałych klientów 🖤. W razie zainteresowania, zapraszam do kontaktu – razem stworzymy coś niezapomnianego! 🫶`,
     },
   ];
 
@@ -74,7 +77,21 @@ export default function Tabs() {
       {/* Tekst wiadomości i przycisk kopiowania */}
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
         <div className="flex-1">
-          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message}</p>
+          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message1}</p>
+        </div>
+        <div className="mt-4 lg:mt-0 lg:ml-4">
+          <button
+            onClick={handleCopy}
+            className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+          >
+            Kopiuj tekst
+          </button>
+          {copySuccess && <p className="text-green-500 mt-2 text-center sm:text-left">{copySuccess}</p>}
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
+        <div className="flex-1">
+          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message2}</p>
         </div>
         <div className="mt-4 lg:mt-0 lg:ml-4">
           <button
