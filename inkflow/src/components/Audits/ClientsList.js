@@ -74,7 +74,6 @@ export default function ClientsList({ startDate, endDate }) {
                     </a>
                   </p>
                 )}
-
                 {session && (
                   <div className="mt-4">
                     <h3 className="text-xl font-medium text-gray-700">
@@ -96,6 +95,13 @@ export default function ClientsList({ startDate, endDate }) {
                         {session.artist.name || session.artist.Name}
                       </p>
                     )}
+                    {/* Dodanie nowego pola "Klient studia" */}
+                {(client.isStudioClient !== undefined || client.IsStudioClient !== undefined) && (
+                  <p className="text-gray-600 mt-2">
+                    <strong>Klient studia:</strong>{" "}
+                    {(client.isStudioClient || client.IsStudioClient) ? 'tak' : 'nie'}
+                  </p>
+                )}
                   </div>
                 )}
 
@@ -133,7 +139,7 @@ export default function ClientsList({ startDate, endDate }) {
 
                 {/* Dodanie przycisku "rozlicz" */}
                 <div className="mt-6">
-                <Link
+                  <Link
                     href={`/audit/session/${session.id || session.Id}`}
                     target="_blank"
                     rel="noopener noreferrer"
