@@ -20,8 +20,8 @@ export default function Tabs() {
     {
       label: '21 dni temu',
       daysAgo: 21,
-      message1: `Dzień dobry! 💫 Tu Martyna, menadżerka naszego studia. Minęły już 3 tygodnie od Państwa wizyty – mam nadzieję, że tatuaż przynosi wiele satysfakcji! Byłabym bardzo wdzięczna, gdyby mogli Państwo podzielić się swoimi wrażeniami z wizyty, abyśmy mogli jeszcze lepiej dostosować nasze usługi do oczekiwań klientów. Przygotowaliśmy krótką ankietę, której wypełnienie zajmie dosłownie chwilę, a każda odpowiedź jest dla nas bardzo cenna 🌱. Z góry dziękuję za poświęcony czas i wsparcie! 🫶 https://forms.gle/AnMQ4qrkjw1teuHy7`,
-    },
+      message1: `Dzień dobry! 💫 Tu Martyna, menadżerka naszego studia. Minęły już 3 tygodnie od Państwa wizyty – mam nadzieję, że tatuaż przynosi wiele satysfakcji! Byłabym bardzo wdzięczna, gdyby mogli Państwo podzielić się swoimi wrażeniami z wizyty, abyśmy mogli jeszcze lepiej dostosować nasze usługi do oczekiwań klientów. Przygotowaliśmy krótką ankietę, której wypełnienie zajmie dosłownie chwilę, a każda odpowiedź jest dla nas bardzo cenna 🌱. Z góry dziękuję za poświęcony czas i wsparcie! 🫶 <a href="https://forms.gle/AnMQ4qrkjw1teuHy7" target="_blank" class="text-blue-500 underline">Kliknij tutaj, aby wypełnić ankietę</a>.`
+    },    
     {
       label: '30 dni temu',
       daysAgo: 30,
