@@ -30,13 +30,34 @@ export default function Tabs() {
     {
       label: '90 dni temu',
       daysAgo: 90,
-      message1: `Dzień dobry! 🥳 Minęły już trzy miesiące od ostatniej wizyty w naszym studiu 😊 Mamy nadzieję, że tatuaż przynosi codzienną radość! Jeśli rozważa Pan/i nowy projekt lub rozbudowę obecnego, mamy przyjemność zaoferować 10% rabatu 🌟. Wystarczy, że zarezerwujesz termin w ciągu najbliższego tygodnia, a samą sesję możemy umówić na dowolny, dogodny czas. Zachęcam do kontaktu – z radością stworzymy coś wyjątkowego! 🖤`,
+      message1: `Dzień dobry,
+Minęły już trzy miesiące od Pani/Pana ostatniej wizyty w naszym studiu. Mamy nadzieję, że wykonany tatuaż spełnia oczekiwania i przynosi wiele radości!
+
+Z przyjemnością informujemy, że w ramach podziękowania za zaufanie i współpracę, przygotowaliśmy 10% rabatu na kolejną sesję. Wystarczy zarezerwować termin w ciągu najbliższego tygodnia, natomiast samą sesję można zaplanować w dogodnym dla Pani/Pana terminie.
+
+Zachęcam do kontaktu – zespół naszego studia z radością pomoże w realizacji Państwa nowych pomysłów!
+
+Pozdrawiam serdecznie,
+Martyna
+Managerka Studio Tatuażu Ekspresja`,
       message2: `Cześć! 😊 Minęły już trzy miesiące od naszej ostatniej sesji – mam nadzieję, że tatuaż przynosi Ci mnóstwo radości każdego dnia! Jeśli zastanawiasz się nad kolejnym projektem lub chcesz rozbudować obecny, z przyjemnością pomogę stworzyć coś wyjątkowego 🌟. Daj znać, jeśli masz pomysł – chętnie pomogę go zrealizować! 🖤`
     },
     {
       label: '180 dni temu',
       daysAgo: 180,
-      message1: `Dzień dobry! ✨ Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli pojawił się pomysł na nowy projekt lub rozbudowę istniejącego, przygotowałam specjalną ofertę dla stałych klientów 🖤. W razie zainteresowania, zapraszam do kontaktu – razem stworzymy coś niezapomnianego! 🫶`,
+      message1: `Dzień dobry! ✨
+Minęło już pół roku od Państwa ostatniej wizyty w naszym studiu – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli pojawił się pomysł na nowy projekt lub rozbudowę istniejącego tatuażu, mam przyjemność zaproponować specjalną ofertę dla naszych stałych klientów 🖤.
+
+W razie zainteresowania serdecznie zapraszam do kontaktu – razem stworzymy coś wyjątkowego! 🫶
+
+Pozdrawiam serdecznie,
+Martyna
+Managerka Studia Tatuażu Ekspresja`,
+      message2: `Dzień dobry! ✨
+Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli masz pomysł na nowy projekt albo chciałbyś rozbudować istniejący tatuaż, przygotowałam specjalną ofertę dla stałych klientów 🖤.
+
+Jeśli jesteś zainteresowana, napisz śmiało – razem stworzymy coś wyjątkowego!`,
+    
     },
   ];
 
