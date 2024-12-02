@@ -98,7 +98,7 @@ Jeśli jesteś zainteresowana, napisz śmiało – razem stworzymy coś wyjątko
       {/* Tekst wiadomości i przycisk kopiowania */}
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
         <div className="flex-1">
-          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message1} dangerouslySetInnerHTML={{ __html: activeTab.message1 }}</p>
+          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message1} </p>
         </div>
         <div className="mt-4 lg:mt-0 lg:ml-4">
           <button
