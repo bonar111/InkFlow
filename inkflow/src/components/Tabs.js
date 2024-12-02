@@ -20,8 +20,8 @@ export default function Tabs() {
     {
       label: '21 dni temu',
       daysAgo: 21,
-      message1: `Dzień dobry! 💫 Tu Martyna, menadżerka naszego studia. Minęły już 3 tygodnie od Państwa wizyty – mam nadzieję, że tatuaż przynosi wiele satysfakcji! Byłabym bardzo wdzięczna, gdyby mogli Państwo podzielić się swoimi wrażeniami z wizyty, abyśmy mogli jeszcze lepiej dostosować nasze usługi do oczekiwań klientów. Przygotowaliśmy krótką ankietę, której wypełnienie zajmie dosłownie chwilę, a każda odpowiedź jest dla nas bardzo cenna 🌱. Z góry dziękuję za poświęcony czas i wsparcie! 🫶 <a href="https://forms.gle/AnMQ4qrkjw1teuHy7" target="_blank" class="text-blue-500 underline">Kliknij tutaj, aby wypełnić ankietę</a>.`
-    },    
+      message1: `Dzień dobry! 💫 Tu Martyna, menadżerka naszego studia. Minęły już 3 tygodnie od Państwa wizyty – mam nadzieję, że tatuaż przynosi wiele satysfakcji! Byłabym bardzo wdzięczna, gdyby mogli Państwo podzielić się swoimi wrażeniami z wizyty, abyśmy mogli jeszcze lepiej dostosować nasze usługi do oczekiwań klientów. Przygotowaliśmy krótką ankietę, której wypełnienie zajmie dosłownie chwilę, a każda odpowiedź jest dla nas bardzo cenna 🌱. Z góry dziękuję za poświęcony czas i wsparcie! 🫶 https://forms.gle/AnMQ4qrkjw1teuHy7`,
+    },
     {
       label: '30 dni temu',
       daysAgo: 30,
@@ -57,15 +57,14 @@ Managerka Studia Tatuażu Ekspresja`,
 Minęło już pół roku od naszego ostatniego spotkania – może to idealny moment na kolejną przygodę z tatuażem? 🎨 Jeśli masz pomysł na nowy projekt albo chciałbyś rozbudować istniejący tatuaż, przygotowałam specjalną ofertę dla stałych klientów 🖤.
 
 Jeśli jesteś zainteresowana, napisz śmiało – razem stworzymy coś wyjątkowego!`,
-    
     },
   ];
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [copySuccess, setCopySuccess] = useState('');
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(activeTab.message).then(
+  const handleCopy = (message) => {
+    navigator.clipboard.writeText(message).then(
       () => {
         setCopySuccess('Skopiowano do schowka!');
         setTimeout(() => setCopySuccess(''), 2000);
@@ -98,11 +97,11 @@ Jeśli jesteś zainteresowana, napisz śmiało – razem stworzymy coś wyjątko
       {/* Tekst wiadomości i przycisk kopiowania */}
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
         <div className="flex-1">
-          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message1} </p>
+          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message1}</p>
         </div>
         <div className="mt-4 lg:mt-0 lg:ml-4">
           <button
-            onClick={handleCopy}
+            onClick={() => handleCopy(activeTab.message1)}
             className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
           >
             Kopiuj tekst
@@ -110,20 +109,23 @@ Jeśli jesteś zainteresowana, napisz śmiało – razem stworzymy coś wyjątko
           {copySuccess && <p className="text-green-500 mt-2 text-center sm:text-left">{copySuccess}</p>}
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
-        <div className="flex-1">
-          <p className="whitespace-pre-wrap text-gray-800">{activeTab.message2}</p>
+
+      {activeTab.message2 && (
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-8">
+          <div className="flex-1">
+            <p className="whitespace-pre-wrap text-gray-800">{activeTab.message2}</p>
+          </div>
+          <div className="mt-4 lg:mt-0 lg:ml-4">
+            <button
+              onClick={() => handleCopy(activeTab.message2)}
+              className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
+            >
+              Kopiuj tekst
+            </button>
+            {copySuccess && <p className="text-green-500 mt-2 text-center sm:text-left">{copySuccess}</p>}
+          </div>
         </div>
-        <div className="mt-4 lg:mt-0 lg:ml-4">
-          <button
-            onClick={handleCopy}
-            className="w-full sm:w-auto flex justify-center items-center px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-200"
-          >
-            Kopiuj tekst
-          </button>
-          {copySuccess && <p className="text-green-500 mt-2 text-center sm:text-left">{copySuccess}</p>}
-        </div>
-      </div>
+      )}
 
       {/* Listing klientów */}
       <div>
