@@ -1,26 +1,27 @@
-// src/components/ClientsList.js
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "../utils/axiosConfig"; // Importujemy skonfigurowaną instancję Axios
+import React, { useState, useEffect } from "react";
+import axios from "../utils/axiosConfig"; // skonfigurowana instancja Axios
 import PropTypes from "prop-types";
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function ClientsList({ daysAgo }) {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sendingMessages, setSendingMessages] = useState({}); // Stan dla wysyłania wiadomości
+  const [sendingMessages, setSendingMessages] = useState({});
 
+  // Funkcja pobierająca listę klientów z API
   const fetchClients = async () => {
     setLoading(true);
     setError(null);
 
     try {
+      // Przykładowy endpoint: /api/customercare/sessions/afterSession-X
+      // Zależnie od Twojego API i logiki, może wyglądać inaczej.
       const endpoint = `/api/customercare/sessions/afterSession-${daysAgo}`;
       const response = await axios.get(endpoint);
       setClients(response.data);
-      console.log(response.data); // Dodane dla debugowania
     } catch (err) {
       if (err.response && err.response.data && err.response.data.detail) {
         setError(err.response.data.detail);
@@ -32,34 +33,31 @@ export default function ClientsList({ daysAgo }) {
     }
   };
 
+  // Pobierz klientów po renderze i przy zmianie daysAgo
   useEffect(() => {
     fetchClients();
   }, [daysAgo]);
 
-  const getAttachments = (client) => {
-    if (client.session && Array.isArray(client.session.attachments)) {
-      return client.session.attachments;
-    }
-    return [];
-  };
-
+  // Funkcja do wysyłania wiadomości (przykład, jeśli nadal potrzebujesz)
   const handleSendMessage = async (sessionId) => {
     const messageType = `day_${daysAgo}`;
-    setSendingMessages(prev => ({ ...prev, [sessionId]: true })); // Ustawiamy stan ładowania dla konkretnej sesji
+    setSendingMessages((prev) => ({ ...prev, [sessionId]: true }));
+
     try {
-      await axios.post(`/api/customercare/sessions/sentmessage`, null, { 
-        params: { sessionId, messageType } 
+      await axios.post(`/api/customercare/sessions/sentmessage`, null, {
+        params: { sessionId, messageType },
       });
-      // Po pomyślnym wysłaniu, odświeżamy listę klientów
+      // Po wysłaniu odśwież listę klientów
       fetchClients();
     } catch (err) {
-      console.error('Error sending message:', err);
-      alert('Wystąpił błąd podczas wysyłania wiadomości.');
+      console.error("Error sending message:", err);
+      alert("Wystąpił błąd podczas wysyłania wiadomości.");
     } finally {
-      setSendingMessages(prev => ({ ...prev, [sessionId]: false })); // Resetujemy stan ładowania
+      setSendingMessages((prev) => ({ ...prev, [sessionId]: false }));
     }
   };
 
+  // Renderuj stan ładowania lub błąd, jeśli wystąpi
   if (loading) {
     return <p className="text-gray-500">Ładowanie klientów...</p>;
   }
@@ -71,54 +69,77 @@ export default function ClientsList({ daysAgo }) {
   return (
     <div className="container mx-auto px-4">
       {clients.length > 0 ? (
-        <ul className="space-y-8"> {/* Zwiększony odstęp między rekordami */}
+        <ul className="space-y-8">
           {clients.map((client) => {
-            const attachments = getAttachments(client);
+            const {
+              id,
+              name,
+              email,
+              session,
+              messageSent,
+              isStudioClient,
+              careMessageResult,
+              conversationWithMessages,
+            } = client;
+
+            // Wyciągamy załączniki z sesji
+            const attachments = session?.attachments || [];
+
+            // Dane z conversationWithMessages (do wyświetlenia w formie skróconej)
+            let conversationInfo = null;
+            if (conversationWithMessages) {
+              const { updatedTime, unreadCount, source, accountOwner } =
+                conversationWithMessages;
+              conversationInfo = { updatedTime, unreadCount, source, accountOwner };
+            }
 
             return (
               <li
-                key={client.id}
+                key={id}
                 className="bg-white shadow-lg rounded-xl p-6 flex flex-col border border-gray-200 hover:bg-gray-50 transition-colors duration-300"
               >
+                {/* Imię i nazwisko klienta */}
                 <h2 className="text-2xl font-semibold text-gray-800">
-                  {client.name}
+                  {name || "Brak nazwy"}
                 </h2>
 
-                {client.email && (
+                {/* E-mail (klikany mailto) */}
+                {email && (
                   <p className="text-gray-600 mt-2">
                     <strong>Email:</strong>{" "}
                     <a
-                      href={`mailto:${client.email}`}
+                      href={`mailto:${email}`}
                       className="text-blue-500 hover:underline"
                     >
-                      {client.email}
+                      {email}
                     </a>
                   </p>
                 )}
 
-                {client.session && (
+                {/* Informacje o ostatniej sesji */}
+                {session && (
                   <div className="mt-4">
                     <h3 className="text-xl font-medium text-gray-700">
                       Ostatnia Sesja:
                     </h3>
                     <p className="text-gray-600 mt-1">
                       <strong>Data:</strong>{" "}
-                      {new Date(client.session.date).toLocaleString()}
+                      {new Date(session.date).toLocaleString()}
                     </p>
-                    {client.session.descriptionFromCalendar && (
+                    {session.descriptionFromCalendar && (
                       <p className="text-gray-600 mt-1">
-                        <strong>Opis:</strong>{" "}
-                        {client.session.descriptionFromCalendar}
+                        <strong>Opis:</strong> {session.descriptionFromCalendar}
                       </p>
                     )}
-                    {client.session.artist && (
+                    {session.artist && (
                       <p className="text-gray-600 mt-1">
-                        <strong>Artysta:</strong> {client.session.artist.name}
+                        <strong>Artysta:</strong> {session.artist.name}
                       </p>
                     )}
                   </div>
                 )}
 
+                {/* Załączniki */}
                 {attachments.length > 0 && (
                   <div className="mt-6">
                     <h3 className="text-xl font-medium text-gray-700 mb-4">
@@ -146,22 +167,90 @@ export default function ClientsList({ daysAgo }) {
                   </div>
                 )}
 
-                {/* Przyciski do wysyłania wiadomości */}
+                {/* Czy klient jest zarejestrowany w studiu */}
                 <div className="mt-4">
-                  {!client.messageSent ? (
+                  <p className="text-gray-600">
+                    <strong>Czy klient studia?</strong>{" "}
+                    {isStudioClient ? "Tak" : "Nie"}
+                  </p>
+                </div>
+
+                {/* careMessageResult (bardziej czytelna forma niż surowy JSON) */}
+                {careMessageResult && (
+                  <div className="mt-4 p-4 bg-gray-100 rounded">
+                    <p className="font-semibold mb-2">Automatycznie wygenerowana wiadomosc dla klienta:</p>
+                    <ul className="list-disc list-inside text-sm text-gray-800 space-y-1">
+                      <li>
+                        <strong>Czy należy napisać do klienta?:</strong>{" "}
+                        {careMessageResult.shouldWriteToClient ? "Tak" : "Nie"}
+                      </li>
+                      <li>
+                        <strong>Wadomość dla klienta:</strong> {careMessageResult.message}
+                      </li>
+                      {careMessageResult.reasonForNotWritingMessage && (
+                    <li>
+                      <strong>Powód lda którego nie należy pisać do klienta:</strong>{" "}
+                      {careMessageResult.reasonForNotWritingMessage}
+                    </li>
+                  )}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Skrótowe informacje o konwersacji, jeśli występuje */}
+                {conversationInfo && (
+                  <div className="mt-4 p-4 bg-gray-100 rounded">
+                    <p className="font-semibold mb-2">Konwersacja:</p>
+                    <p className="text-gray-600">
+                      <strong>Ostatnia aktualizacja:</strong>{" "}
+                      {conversationInfo.updatedTime}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>Źródło:</strong> {conversationInfo.source}
+                    </p>
+                    <p className="text-gray-600">
+                      <strong>Konto/Artysta:</strong> {conversationInfo.accountOwner}
+                    </p>
+                  </div>
+                )}
+
+                {/* Przycisk do wysłania wiadomości (jeśli potrzeba) */}
+                <div className="mt-4">
+                  {!messageSent && session ? (
                     <button
-                      onClick={() => handleSendMessage(client.session.id)}
-                      disabled={sendingMessages[client.session.id]}
+                      onClick={() => handleSendMessage(session.id)}
+                      disabled={sendingMessages[session.id]}
                       className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300 ${
-                        sendingMessages[client.session.id] ? 'opacity-50 cursor-not-allowed' : ''
+                        sendingMessages[session.id]
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
                       }`}
                     >
-                      {sendingMessages[client.session.id] ? 'Wysyłanie...' : 'Wysłano wiadomość'}
+                      {sendingMessages[session.id]
+                        ? "Wysyłanie..."
+                        : "Wyślij wiadomość"}
                     </button>
                   ) : (
-                    <span className="text-green-600 font-medium">Wiadomość wysłana</span>
+                    <span className="text-green-600 font-medium">
+                      Wiadomość wysłana
+                    </span>
                   )}
                 </div>
+
+                {/* Przycisk otwierający konwersację w nowej karcie (jeśli jest) */}
+                {/* {conversationWithMessages && (
+                  <div className="mt-4">
+                    <button
+                      onClick={() => {
+                        // Zakładamy, że pod tym adresem mamy stronę do podglądu konwersacji:
+                        window.open(`/clients/${id}/conversation`, "_blank");
+                      }}
+                      className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300"
+                    >
+                      Zobacz konwersację z klientem
+                    </button>
+                  </div>
+                )} */}
               </li>
             );
           })}
