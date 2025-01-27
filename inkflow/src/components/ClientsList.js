@@ -5,6 +5,27 @@ import axios from "../utils/axiosConfig"; // skonfigurowana instancja Axios
 import PropTypes from "prop-types";
 import Image from "next/image";
 
+// Proponowana przykładowa funkcja generująca treść wiadomości
+// (możesz ją rozbudować lub pobierać tekst z backendu w zależności od messageType)
+function getDefaultMessageByType(messageType) {
+  switch (messageType.toLowerCase()) {
+    case "day_2":
+      return "Cześć! To przykładowa treść wiadomości na 2 dzień.";
+    case "day_14":
+      return "Dzień dobry! Przykładowa treść wiadomości na 14 dzień.";
+    case "day_21":
+      return "Przykładowa wiadomość na 21 dzień...";
+    case "day_30":
+      return "Hej! To wiadomość domyślna na 30 dzień.";
+    case "day_90":
+      return "To wiadomość na 90 dzień.";
+    case "day_180":
+      return "Cześć! Przykładowa treść na 180 dzień.";
+    default:
+      return "Standardowa wiadomość domyślna.";
+  }
+}
+
 export default function ClientsList({ daysAgo }) {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,22 +58,32 @@ export default function ClientsList({ daysAgo }) {
     fetchClients();
   }, [daysAgo]);
 
-  // Funkcja do wysyłania wiadomości (jeśli jest potrzebna w Twoim flow)
-  const handleSendMessage = async (sessionId) => {
-    const messageType = `day_${daysAgo}`;
-    setSendingMessages((prev) => ({ ...prev, [sessionId]: true }));
+  // Funkcja do wysyłania wiadomości poprzez endpoint /api/customercare/sessions/sentmessage
+  const handleSendMessage = async (client, messageType) => {
+    // Przygotuj dane w formacie wymaganym przez Twój endpoint
+    const requestData = {
+      sessionId: client.session?.id || "",
+      clientId: client.id,
+      messageType: messageType,
+      phone: client.phone,
+      // Tutaj generujemy przykładową treść wiadomości - w praktyce możesz podstawić swój szablon
+      message: getDefaultMessageByType(messageType),
+      isIgnored: false,
+    };
+
+    // Oznacz, że dla tej sesji trwa wysyłanie
+    setSendingMessages((prev) => ({ ...prev, [client.session?.id]: true }));
 
     try {
-      await axios.post(`/api/customercare/sessions/sentmessage`, null, {
-        params: { sessionId, messageType },
-      });
+      await axios.post(`/api/customercare/sessions/sentmessage`, requestData);
       // Po wysłaniu, odśwież listę klientów
       fetchClients();
     } catch (err) {
       console.error("Error sending message:", err);
       alert("Wystąpił błąd podczas wysyłania wiadomości.");
     } finally {
-      setSendingMessages((prev) => ({ ...prev, [sessionId]: false }));
+      // Zakończ wysyłanie dla tej sesji
+      setSendingMessages((prev) => ({ ...prev, [client.session?.id]: false }));
     }
   };
 
@@ -74,7 +105,7 @@ export default function ClientsList({ daysAgo }) {
               id,
               name,
               email,
-              phone, // <-- NOWE pole phone
+              phone,
               session,
               messageSent,
               isStudioClient,
@@ -216,11 +247,11 @@ export default function ClientsList({ daysAgo }) {
                   </div>
                 )}
 
-                {/* Przycisk do wysłania wiadomości (opcja) */}
+                {/* Przycisk do wysłania wiadomości */}
                 <div className="mt-4">
                   {!messageSent && session ? (
                     <button
-                      onClick={() => handleSendMessage(session.id)}
+                      onClick={() => handleSendMessage(client, `day_${daysAgo}`)}
                       disabled={sendingMessages[session.id]}
                       className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300 ${
                         sendingMessages[session.id]
