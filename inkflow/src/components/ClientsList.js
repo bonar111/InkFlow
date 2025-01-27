@@ -114,6 +114,7 @@ export default function ClientsList({ daysAgo }) {
                       {email}
                     </a>
                   </p>
+                  
                 )}
 
                 {/* Informacje o ostatniej sesji */}
