@@ -166,7 +166,6 @@ export default function ClientsList({ daysAgo }) {
                     </div>
                   </div>
                 )}
-
                 {/* Czy klient jest zarejestrowany w studiu */}
                 <div className="mt-4">
                   <p className="text-gray-600">
@@ -177,39 +176,29 @@ export default function ClientsList({ daysAgo }) {
 
                 {/* careMessageResult (bardziej czytelna forma niż surowy JSON) */}
                 {careMessageResult && (
-                  <div className="mt-4 p-4 bg-gray-100 rounded">
-                    <p className="font-semibold mb-2">Automatycznie wygenerowana wiadomosc dla klienta:</p>
-                    <ul className="list-disc list-inside text-sm text-gray-800 space-y-1">
-                      <li>
+                  <div className="mt-4">
+                      <p className="text-gray-600">
                         <strong>Czy należy napisać do klienta?:</strong>{" "}
                         {careMessageResult.shouldWriteToClient ? "Tak" : "Nie"}
-                      </li>
-                      <li>
-                        <strong>Wadomość dla klienta:</strong> {careMessageResult.message}
-                      </li>
+                      </p>
                       {careMessageResult.reasonForNotWritingMessage && (
                     <li>
                       <strong>Powód lda którego nie należy pisać do klienta:</strong>{" "}
                       {careMessageResult.reasonForNotWritingMessage}
                     </li>
                   )}
-                    </ul>
+                    
                   </div>
                 )}
 
                 {/* Skrótowe informacje o konwersacji, jeśli występuje */}
                 {conversationInfo && (
-                  <div className="mt-4 p-4 bg-gray-100 rounded">
-                    <p className="font-semibold mb-2">Konwersacja:</p>
-                    <p className="text-gray-600">
-                      <strong>Ostatnia aktualizacja:</strong>{" "}
-                      {conversationInfo.updatedTime}
-                    </p>
+                  <div className="mt-4">
                     <p className="text-gray-600">
                       <strong>Źródło:</strong> {conversationInfo.source}
                     </p>
                     <p className="text-gray-600">
-                      <strong>Konto/Artysta:</strong> {conversationInfo.accountOwner}
+                      <strong>Konto:</strong> {conversationInfo.accountOwner}
                     </p>
                   </div>
                 )}
