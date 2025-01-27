@@ -18,7 +18,6 @@ export default function ClientsList({ daysAgo }) {
 
     try {
       // Przykładowy endpoint: /api/customercare/sessions/afterSession-X
-      // Zależnie od Twojego API i logiki, może wyglądać inaczej.
       const endpoint = `/api/customercare/sessions/afterSession-${daysAgo}`;
       const response = await axios.get(endpoint);
       setClients(response.data);
@@ -33,12 +32,12 @@ export default function ClientsList({ daysAgo }) {
     }
   };
 
-  // Pobierz klientów po renderze i przy zmianie daysAgo
+  // Pobierz klientów tuż po montowaniu komponentu i przy każdej zmianie daysAgo
   useEffect(() => {
     fetchClients();
   }, [daysAgo]);
 
-  // Funkcja do wysyłania wiadomości (przykład, jeśli nadal potrzebujesz)
+  // Funkcja do wysyłania wiadomości (jeśli jest potrzebna w Twoim flow)
   const handleSendMessage = async (sessionId) => {
     const messageType = `day_${daysAgo}`;
     setSendingMessages((prev) => ({ ...prev, [sessionId]: true }));
@@ -47,7 +46,7 @@ export default function ClientsList({ daysAgo }) {
       await axios.post(`/api/customercare/sessions/sentmessage`, null, {
         params: { sessionId, messageType },
       });
-      // Po wysłaniu odśwież listę klientów
+      // Po wysłaniu, odśwież listę klientów
       fetchClients();
     } catch (err) {
       console.error("Error sending message:", err);
@@ -57,7 +56,7 @@ export default function ClientsList({ daysAgo }) {
     }
   };
 
-  // Renderuj stan ładowania lub błąd, jeśli wystąpi
+  // Ekran ładowania / błąd
   if (loading) {
     return <p className="text-gray-500">Ładowanie klientów...</p>;
   }
@@ -75,6 +74,7 @@ export default function ClientsList({ daysAgo }) {
               id,
               name,
               email,
+              phone, // <-- NOWE pole phone
               session,
               messageSent,
               isStudioClient,
@@ -82,10 +82,10 @@ export default function ClientsList({ daysAgo }) {
               conversationWithMessages,
             } = client;
 
-            // Wyciągamy załączniki z sesji
+            // Załączniki z sesji
             const attachments = session?.attachments || [];
 
-            // Dane z conversationWithMessages (do wyświetlenia w formie skróconej)
+            // Ewentualne dane o konwersacji (fragmenty)
             let conversationInfo = null;
             if (conversationWithMessages) {
               const { updatedTime, unreadCount, source, accountOwner } =
@@ -98,12 +98,12 @@ export default function ClientsList({ daysAgo }) {
                 key={id}
                 className="bg-white shadow-lg rounded-xl p-6 flex flex-col border border-gray-200 hover:bg-gray-50 transition-colors duration-300"
               >
-                {/* Imię i nazwisko klienta */}
+                {/* Nazwa klienta */}
                 <h2 className="text-2xl font-semibold text-gray-800">
                   {name || "Brak nazwy"}
                 </h2>
 
-                {/* E-mail (klikany mailto) */}
+                {/* E-mail klienta */}
                 {email && (
                   <p className="text-gray-600 mt-2">
                     <strong>Email:</strong>{" "}
@@ -114,10 +114,22 @@ export default function ClientsList({ daysAgo }) {
                       {email}
                     </a>
                   </p>
-                  
                 )}
 
-                {/* Informacje o ostatniej sesji */}
+                {/* Telefon klienta */}
+                {phone && (
+                  <p className="text-gray-600 mt-1">
+                    <strong>Telefon:</strong>{" "}
+                    <a
+                      href={`tel:${phone}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      {phone}
+                    </a>
+                  </p>
+                )}
+
+                {/* Informacje o sesji */}
                 {session && (
                   <div className="mt-4">
                     <h3 className="text-xl font-medium text-gray-700">
@@ -167,32 +179,32 @@ export default function ClientsList({ daysAgo }) {
                     </div>
                   </div>
                 )}
-                {/* Czy klient jest zarejestrowany w studiu */}
+
+                {/* Informacja, czy klient studia */}
                 <div className="mt-4">
                   <p className="text-gray-600">
-                    <strong>Czy klient studia?</strong>{" "}
+                    <strong>Czy klient studia?:</strong>{" "}
                     {isStudioClient ? "Tak" : "Nie"}
                   </p>
                 </div>
 
-                {/* careMessageResult (bardziej czytelna forma niż surowy JSON) */}
+                {/* Wynik analizy careMessageResult */}
                 {careMessageResult && (
                   <div className="mt-4">
+                    <p className="text-gray-600">
+                      <strong>Czy należy napisać do klienta?:</strong>{" "}
+                      {careMessageResult.shouldWriteToClient ? "Tak" : "Nie"}
+                    </p>
+                    {careMessageResult.reasonForNotWritingMessage && (
                       <p className="text-gray-600">
-                        <strong>Czy należy napisać do klienta?:</strong>{" "}
-                        {careMessageResult.shouldWriteToClient ? "Tak" : "Nie"}
+                        <strong>Powód, dla którego nie należy pisać:</strong>{" "}
+                        {careMessageResult.reasonForNotWritingMessage}
                       </p>
-                      {careMessageResult.reasonForNotWritingMessage && (
-                    <li>
-                      <strong>Powód lda którego nie należy pisać do klienta:</strong>{" "}
-                      {careMessageResult.reasonForNotWritingMessage}
-                    </li>
-                  )}
-                    
+                    )}
                   </div>
                 )}
 
-                {/* Skrótowe informacje o konwersacji, jeśli występuje */}
+                {/* Skrótowe info o konwersacji (jeśli występuje) */}
                 {conversationInfo && (
                   <div className="mt-4">
                     <p className="text-gray-600">
@@ -204,7 +216,7 @@ export default function ClientsList({ daysAgo }) {
                   </div>
                 )}
 
-                {/* Przycisk do wysłania wiadomości (jeśli potrzeba) */}
+                {/* Przycisk do wysłania wiadomości (opcja) */}
                 <div className="mt-4">
                   {!messageSent && session ? (
                     <button
@@ -226,21 +238,6 @@ export default function ClientsList({ daysAgo }) {
                     </span>
                   )}
                 </div>
-
-                {/* Przycisk otwierający konwersację w nowej karcie (jeśli jest) */}
-                {/* {conversationWithMessages && (
-                  <div className="mt-4">
-                    <button
-                      onClick={() => {
-                        // Zakładamy, że pod tym adresem mamy stronę do podglądu konwersacji:
-                        window.open(`/clients/${id}/conversation`, "_blank");
-                      }}
-                      className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300"
-                    >
-                      Zobacz konwersację z klientem
-                    </button>
-                  </div>
-                )} */}
               </li>
             );
           })}
