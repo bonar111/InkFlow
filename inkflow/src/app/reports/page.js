@@ -33,9 +33,21 @@ function formatDate(date) {
 export default function ReportsPage() {
   const router = useRouter();
 
-  // Daty wybrane w react-datepicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  // Obliczamy pierwszy dzień bieżącego miesiąca (godzina 00:00)
+  const now = new Date();
+  const defaultStartDate = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+  const defaultEndDate = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    23,
+    59,
+    59
+  );
+
+  // Daty wybrane w react-datepicker, z domyślnymi wartościami
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
 
   // Dane z aggregated
   const [aggregatedData, setAggregatedData] = useState(null);
@@ -48,8 +60,8 @@ export default function ReportsPage() {
   const [loading, setLoading] = useState(false);
 
   /**
-   * Przy montowaniu komponentu – sprawdzamy token,
-   * Jeśli brak – przekierowanie do /login (możesz też to zostawić samemu interceptorowi).
+   * Przy montowaniu komponentu – sprawdzamy token;
+   * Jeśli brak – przekierowanie do /login
    */
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -185,7 +197,6 @@ export default function ReportsPage() {
                   <table className="w-full border border-gray-200 text-sm">
                     <thead className="bg-gray-100">
                       <tr>
-                        <th className="px-4 py-2 border">Tattooist ID</th>
                         <th className="px-4 py-2 border">Tattooist Name</th>
                         <th className="px-4 py-2 border">Revenue</th>
                       </tr>
@@ -193,9 +204,10 @@ export default function ReportsPage() {
                     <tbody>
                       {aggregatedData.revenuePerTattooist.map((item) => (
                         <tr key={item.tattooistId} className="border-b">
-                          <td className="px-4 py-2 border">{item.tattooistId}</td>
                           <td className="px-4 py-2 border">{item.tattooistName}</td>
-                          <td className="px-4 py-2 border">{formatPLN(item.revenue)}</td>
+                          <td className="px-4 py-2 border">
+                            {formatPLN(item.revenue)}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -260,7 +272,9 @@ export default function ReportsPage() {
                         <tr key={t.tattooistId} className="border-b">
                           <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
-                          <td className="px-4 py-2 border">{t.returningClientsCount}</td>
+                          <td className="px-4 py-2 border">
+                            {t.returningClientsCount}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -288,7 +302,9 @@ export default function ReportsPage() {
                         <tr key={t.tattooistId} className="border-b">
                           <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
-                          <td className="px-4 py-2 border">{t.returningClientsCount}</td>
+                          <td className="px-4 py-2 border">
+                            {t.returningClientsCount}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -316,7 +332,9 @@ export default function ReportsPage() {
                         <tr key={t.tattooistId} className="border-b">
                           <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
-                          <td className="px-4 py-2 border">{t.returningClientsCount}</td>
+                          <td className="px-4 py-2 border">
+                            {t.returningClientsCount}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
