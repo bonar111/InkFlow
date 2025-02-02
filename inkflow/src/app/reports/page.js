@@ -131,7 +131,7 @@ export default function ReportsPage() {
 
       {/* AGGREGATED SECTION */}
       <section className="mb-12 bg-white p-6 shadow-md rounded">
-        <h2 className="text-xl font-semibold mb-4">Aggregated Report</h2>
+        <h2 className="text-xl font-semibold mb-4">Pobierz</h2>
 
         {/* Daty + przycisk */}
         <div className="flex flex-col md:flex-row gap-4 mb-4">
