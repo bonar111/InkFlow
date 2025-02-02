@@ -12,7 +12,7 @@ export default function Navbar() {
             <Link href="/clients">Obsługa klientów</Link>
           </li>
           <li>
-            <Link href="/marketing">Marketing</Link>
+            <Link href="/reports">Finanse</Link>
           </li>
           <li>
             <Link href="/audits">Rozliczenia sesji</Link>
