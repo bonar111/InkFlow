@@ -159,7 +159,7 @@ export default function ReportsPage() {
             onClick={fetchAggregatedReport}
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition self-start"
           >
-            Pobierz Aggregated
+            Pobierz
           </button>
         </div>
 
@@ -220,7 +220,7 @@ export default function ReportsPage() {
 
       {/* EXTENDED SECTION */}
       <section className="bg-white p-6 shadow-md rounded">
-        <h2 className="text-xl font-semibold mb-4">Extended Aggregated Report</h2>
+        <h2 className="text-xl font-semibold mb-4">Dodatkowe statystyki(TO JESZCZE NIE DZIALA)</h2>
         <p className="text-sm text-gray-600 mb-4">
           Ten raport nie wymaga podania zakresu dat; backend sam je ustala.
         </p>
@@ -229,7 +229,7 @@ export default function ReportsPage() {
           onClick={fetchExtendedReport}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
-          Pobierz Extended
+          Pobierz
         </button>
 
         {loading && <p className="text-gray-500 mt-4">Wczytywanie...</p>}
