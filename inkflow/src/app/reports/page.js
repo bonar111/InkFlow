@@ -220,7 +220,7 @@ export default function ReportsPage() {
 
       {/* EXTENDED SECTION */}
       <section className="bg-white p-6 shadow-md rounded">
-        <h2 className="text-xl font-semibold mb-4">Dodatkowe statystyki(TO JESZCZE NIE DZIALA)</h2>
+        <h2 className="text-xl font-semibold mb-4">Dodatkowe statystyki przychodów</h2>
         <p className="text-sm text-gray-600 mb-4">
           Ten raport nie wymaga podania zakresu dat; backend sam je ustala.
         </p>
@@ -262,7 +262,6 @@ export default function ReportsPage() {
                   <table className="w-full border border-gray-200 text-sm">
                     <thead className="bg-gray-100">
                       <tr>
-                        <th className="px-4 py-2 border">Tattooist ID</th>
                         <th className="px-4 py-2 border">Tattooist Name</th>
                         <th className="px-4 py-2 border">Returning Clients</th>
                       </tr>
@@ -270,7 +269,6 @@ export default function ReportsPage() {
                     <tbody>
                       {extendedData.returningClientsPerTattooistIn3Months.map((t) => (
                         <tr key={t.tattooistId} className="border-b">
-                          <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
                           <td className="px-4 py-2 border">
                             {t.returningClientsCount}
@@ -292,7 +290,6 @@ export default function ReportsPage() {
                   <table className="w-full border border-gray-200 text-sm">
                     <thead className="bg-gray-100">
                       <tr>
-                        <th className="px-4 py-2 border">Tattooist ID</th>
                         <th className="px-4 py-2 border">Tattooist Name</th>
                         <th className="px-4 py-2 border">Returning Clients</th>
                       </tr>
@@ -300,7 +297,6 @@ export default function ReportsPage() {
                     <tbody>
                       {extendedData.returningClientsPerTattooistIn6Months.map((t) => (
                         <tr key={t.tattooistId} className="border-b">
-                          <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
                           <td className="px-4 py-2 border">
                             {t.returningClientsCount}
@@ -322,7 +318,6 @@ export default function ReportsPage() {
                   <table className="w-full border border-gray-200 text-sm">
                     <thead className="bg-gray-100">
                       <tr>
-                        <th className="px-4 py-2 border">Tattooist ID</th>
                         <th className="px-4 py-2 border">Tattooist Name</th>
                         <th className="px-4 py-2 border">Returning Clients</th>
                       </tr>
@@ -330,7 +325,6 @@ export default function ReportsPage() {
                     <tbody>
                       {extendedData.returningClientsPerTattooistIn12Months.map((t) => (
                         <tr key={t.tattooistId} className="border-b">
-                          <td className="px-4 py-2 border">{t.tattooistId}</td>
                           <td className="px-4 py-2 border">{t.tattooistName}</td>
                           <td className="px-4 py-2 border">
                             {t.returningClientsCount}
