@@ -221,9 +221,6 @@ export default function ReportsPage() {
       {/* EXTENDED SECTION */}
       <section className="bg-white p-6 shadow-md rounded">
         <h2 className="text-xl font-semibold mb-4">Dodatkowe statystyki przychodów</h2>
-        <p className="text-sm text-gray-600 mb-4">
-          Ten raport nie wymaga podania zakresu dat; backend sam je ustala.
-        </p>
 
         <button
           onClick={fetchExtendedReport}
