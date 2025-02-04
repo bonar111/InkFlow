@@ -248,7 +248,7 @@ export default function ClientsList({ daysAgo }) {
                 )}
 
                 {/* Przycisk do wysłania wiadomości */}
-                {/* <div className="mt-4">
+                {<div className="mt-4">
                   {!messageSent && session ? (
                     <button
                       onClick={() => handleSendMessage(client, `day_${daysAgo}`)}
@@ -268,7 +268,7 @@ export default function ClientsList({ daysAgo }) {
                       Wiadomość wysłana
                     </span>
                   )}
-                </div> */}
+                </div> }
               </li>
             );
           })}
