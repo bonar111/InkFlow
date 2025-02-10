@@ -5,27 +5,6 @@ import axios from "../utils/axiosConfig"; // skonfigurowana instancja Axios
 import PropTypes from "prop-types";
 import Image from "next/image";
 
-// Proponowana przykładowa funkcja generująca treść wiadomości
-// (możesz ją rozbudować lub pobierać tekst z backendu w zależności od messageType)
-function getDefaultMessageByType(messageType) {
-  switch (messageType.toLowerCase()) {
-    case "day_2":
-      return "Cześć! To przykładowa treść wiadomości na 2 dzień.";
-    case "day_14":
-      return "Dzień dobry! Przykładowa treść wiadomości na 14 dzień.";
-    case "day_21":
-      return "Przykładowa wiadomość na 21 dzień...";
-    case "day_30":
-      return "Hej! To wiadomość domyślna na 30 dzień.";
-    case "day_90":
-      return "To wiadomość na 90 dzień.";
-    case "day_180":
-      return "Cześć! Przykładowa treść na 180 dzień.";
-    default:
-      return "Standardowa wiadomość domyślna.";
-  }
-}
-
 export default function ClientsList({ daysAgo }) {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,8 +45,6 @@ export default function ClientsList({ daysAgo }) {
       clientId: client.id,
       messageType: messageType,
       phone: client.phone,
-      // Tutaj generujemy przykładową treść wiadomości - w praktyce możesz podstawić swój szablon
-      message: getDefaultMessageByType(messageType),
       isIgnored: false,
     };
 
